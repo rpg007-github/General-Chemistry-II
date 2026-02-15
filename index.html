@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Chemistry II Fundamentals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --bg-card: #ffffff;
+      --text: #1e2a3a;
+      --text-muted: #5a6a7a;
+      --accent: #1a5276;
+      --accent-light: #e4eef6;
+      --accent-warm: #2e86c1;
+      --border: #d5dde6;
+      --border-light: #e8edf2;
+      --highlight: #fef9e7;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
+      --green: #1e8449;
+      --green-light: #e8f8f0;
+      --amber: #b7950b;
+      --amber-light: #fef9e7;
+      --coral: #c0392b;
+      --coral-light: #fdedec;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0e2f44 0%, #1a5276 40%, #2e86c1 100%);
+      color: #fff; padding: 4rem 2rem 3.5rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: .5;
+    }
+    .hero h1 { font-family: 'Crimson Pro', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; letter-spacing: .02em; margin-bottom: .5rem; position: relative; }
+    .hero .subtitle { font-size: 1.1rem; font-weight: 300; opacity: .85; position: relative; }
+    .hero .badge { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .25rem 1rem; font-size: .85rem; margin-top: 1rem; position: relative; font-family: 'JetBrains Mono', monospace; }
+
+    /* CONTAINER */
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* TABLE OF CONTENTS */
+    .toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow); }
+    .toc h2 { font-family: 'Crimson Pro', serif; font-size: 1.4rem; font-weight: 500; margin-bottom: 1rem; color: var(--accent); }
+    .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .5rem; }
+    .toc a { text-decoration: none; color: var(--text); padding: .4rem .6rem; border-radius: 6px; display: flex; align-items: center; gap: .5rem; transition: all .2s; font-size: .95rem; }
+    .toc a:hover { background: var(--accent-light); color: var(--accent); }
+    .toc a .num { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent); background: var(--accent-light); padding: .1rem .45rem; border-radius: 4px; font-weight: 500; }
+
+    /* SECTION CARDS */
+    .section-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); transition: box-shadow .3s; }
+    .section-card:hover { box-shadow: var(--shadow-hover); }
+    .section-card h2 { font-family: 'Crimson Pro', serif; font-size: 1.6rem; font-weight: 500; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: .65rem; }
+    .section-card h2 .num { font-family: 'JetBrains Mono', monospace; font-size: .85rem; background: var(--accent); color: #fff; padding: .2rem .55rem; border-radius: 5px; }
+    .section-card h3 { font-family: 'Crimson Pro', serif; font-size: 1.2rem; font-weight: 500; color: var(--text); margin: 1.5rem 0 .5rem; }
+    .section-card p { margin-bottom: .75rem; }
+
+    /* CALLOUT BOXES */
+    .callout { border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .95rem; }
+    .callout-key { background: var(--accent-light); border-left: 4px solid var(--accent); }
+    .callout-example { background: var(--amber-light); border-left: 4px solid var(--amber); }
+    .callout-warning { background: var(--coral-light); border-left: 4px solid var(--coral); }
+    .callout-mnemonic { background: #f0e6fa; border-left: 4px solid #7d3c98; }
+    .callout strong { font-weight: 600; }
+
+    /* TABLES */
+    .ref-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem; }
+    .ref-table th { background: var(--accent); color: #fff; padding: .6rem .75rem; text-align: left; font-weight: 500; font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+    .ref-table td { padding: .55rem .75rem; border-bottom: 1px solid var(--border-light); }
+    .ref-table tr:hover td { background: var(--accent-light); }
+    .ref-table code { font-family: 'JetBrains Mono', monospace; font-size: .88em; background: #f0f0f0; padding: .1rem .35rem; border-radius: 3px; }
+
+    /* FORMULA */
+    code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; background: #eef2f7; padding: .15rem .4rem; border-radius: 4px; }
+    .formula-block { background: #eef2f7; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; font-size: .95rem; text-align: center; line-height: 2; }
+
+    /* TABS */
+    .tab-nav { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .tab-btn { padding: .6rem 1.25rem; border: 2px solid var(--border); background: var(--bg-card); border-radius: 8px; cursor: pointer; font-family: 'Source Sans 3', sans-serif; font-size: .95rem; font-weight: 500; transition: all .2s; color: var(--text-muted); }
+    .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* QUIZ */
+    .quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .quiz-card .q-num { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent); margin-bottom: .5rem; }
+    .quiz-card p { font-weight: 500; margin-bottom: .75rem; }
+    .quiz-options label { display: block; padding: .5rem .75rem; margin: .25rem 0; border: 1px solid var(--border-light); border-radius: 6px; cursor: pointer; transition: all .2s; }
+    .quiz-options label:hover { background: var(--accent-light); }
+    .quiz-options input { margin-right: .5rem; }
+    .quiz-feedback { margin-top: .75rem; padding: .75rem 1rem; border-radius: 6px; font-size: .92rem; display: none; }
+    .quiz-feedback.correct { background: var(--green-light); border-left: 4px solid var(--green); }
+    .quiz-feedback.incorrect { background: var(--coral-light); border-left: 4px solid var(--coral); }
+    .quiz-submit { background: var(--accent); color: #fff; border: none; padding: .5rem 1.25rem; border-radius: 6px; cursor: pointer; font-size: .9rem; font-weight: 500; margin-top: .5rem; }
+    .quiz-submit:hover { opacity: .9; }
+    .quiz-score { background: var(--accent); color: #fff; padding: 1rem 1.5rem; border-radius: 10px; text-align: center; font-size: 1.1rem; font-weight: 500; margin-bottom: 1.5rem; }
+
+    /* FLASHCARDS */
+    .filter-btns { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .filter-btn { padding: .4rem .9rem; border: 1px solid var(--border); background: var(--bg-card); border-radius: 20px; cursor: pointer; font-size: .85rem; transition: all .2s; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .fc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .fc-card { perspective: 800px; height: 200px; cursor: pointer; }
+    .fc-inner { position: relative; width: 100%; height: 100%; transition: transform .5s; transform-style: preserve-3d; }
+    .fc-card.flipped .fc-inner { transform: rotateY(180deg); }
+    .fc-front, .fc-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 1.25rem; text-align: center; font-size: .95rem; border: 1px solid var(--border); }
+    .fc-front { background: var(--bg-card); font-weight: 500; box-shadow: var(--shadow); }
+    .fc-back { background: var(--accent-light); transform: rotateY(180deg); line-height: 1.5; color: var(--text); }
+    .fc-cat { position: absolute; top: .5rem; right: .65rem; font-size: .7rem; background: var(--accent); color: #fff; padding: .1rem .5rem; border-radius: 10px; font-family: 'JetBrains Mono', monospace; }
+
+    /* SHORT ANSWER */
+    .sa-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .sa-card textarea { width: 100%; min-height: 80px; border: 1px solid var(--border); border-radius: 6px; padding: .75rem; font-family: 'Source Sans 3', sans-serif; font-size: .95rem; resize: vertical; margin: .75rem 0; }
+    .sa-grade-btn { background: var(--accent); color: #fff; border: none; padding: .5rem 1.25rem; border-radius: 6px; cursor: pointer; font-size: .9rem; font-weight: 500; }
+    .sa-grade-btn:hover { opacity: .9; }
+    .sa-result { margin-top: .75rem; display: none; }
+    .sa-bar { height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; margin: .5rem 0; }
+    .sa-bar-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+    .sa-concepts { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
+    .sa-tag { font-size: .8rem; padding: .2rem .55rem; border-radius: 12px; font-weight: 500; }
+    .sa-tag.hit { background: var(--green-light); color: var(--green); }
+    .sa-tag.miss { background: #f0f0f0; color: #999; }
+    .sa-model { margin-top: .75rem; }
+    .sa-model summary { cursor: pointer; color: var(--accent); font-weight: 500; font-size: .9rem; }
+    .sa-model .model-text { margin-top: .5rem; padding: .75rem 1rem; background: var(--accent-light); border-radius: 6px; font-size: .9rem; line-height: 1.6; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .container { padding: 1.25rem 1rem 3rem; }
+      .section-card { padding: 1.25rem; }
+      .fc-grid { grid-template-columns: 1fr; }
+      .toc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>General Chemistry II</h1>
+  <p class="subtitle">The Facts You Just Know</p>
+  <div class="badge">CHM 2046 &middot; Essential Reference</div>
+</div>
+
+<div class="container">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Contents</h2>
+  <div class="toc-grid">
+    <a href="#kinetics"><span class="num">01</span> Chemical Kinetics</a>
+    <a href="#equilibrium"><span class="num">02</span> Chemical Equilibrium</a>
+    <a href="#acids-bases"><span class="num">03</span> Acids &amp; Bases</a>
+    <a href="#buffers"><span class="num">04</span> Buffers &amp; Titrations</a>
+    <a href="#solubility"><span class="num">05</span> Solubility Equilibria</a>
+    <a href="#thermo"><span class="num">06</span> Thermodynamics</a>
+    <a href="#electrochem"><span class="num">07</span> Electrochemistry</a>
+    <a href="#nuclear"><span class="num">08</span> Nuclear Chemistry</a>
+    <a href="#constants"><span class="num">09</span> Constants &amp; Formulas</a>
+    <a href="#practice"><span class="num">10</span> Practice &amp; Review</a>
+  </div>
+</div>
+
+<!-- SECTION 1: KINETICS -->
+<div class="section-card" id="kinetics">
+  <h2><span class="num">01</span> Chemical Kinetics</h2>
+  <p>Kinetics is the study of how fast reactions happen and what factors control that speed. The rate of a reaction tells you how quickly reactant concentrations decrease or product concentrations increase over time.</p>
+
+  <h3>Reaction Rate</h3>
+  <p>Rate is defined as the change in concentration over time. For a reaction <code>aA &rarr; bB</code>, the rate can be written as <code>Rate = &minus;(1/a)(&Delta;[A]/&Delta;t) = (1/b)(&Delta;[B]/&Delta;t)</code>. The negative sign accounts for the fact that reactant concentration decreases. Rates are always expressed as positive values.</p>
+
+  <h3>Rate Laws</h3>
+  <p>A rate law expresses the rate as a function of reactant concentrations and a rate constant: <code>Rate = k[A]<sup>m</sup>[B]<sup>n</sup></code>. The exponents m and n are the reaction orders with respect to each reactant, and they must be determined experimentally. They are not simply the stoichiometric coefficients. The overall order is the sum of all individual orders.</p>
+
+  <div class="callout callout-key"><strong>Key Point:</strong> Reaction orders must be determined from experimental data (initial rates method), not from the balanced equation.</div>
+
+  <h3>Integrated Rate Laws</h3>
+  <p>Integrated rate laws relate concentration to time and allow you to predict how much reactant remains after a given period. Each order has a characteristic equation and a straight-line plot:</p>
+
+  <table class="ref-table">
+    <tr><th>Order</th><th>Integrated Law</th><th>Linear Plot</th><th>Half-Life</th><th>Units of k</th></tr>
+    <tr><td>Zero</td><td><code>[A] = [A]<sub>0</sub> &minus; kt</code></td><td>[A] vs t</td><td><code>t<sub>1/2</sub> = [A]<sub>0</sub> / 2k</code></td><td>M/s</td></tr>
+    <tr><td>First</td><td><code>ln[A] = ln[A]<sub>0</sub> &minus; kt</code></td><td>ln[A] vs t</td><td><code>t<sub>1/2</sub> = 0.693 / k</code></td><td>1/s</td></tr>
+    <tr><td>Second</td><td><code>1/[A] = 1/[A]<sub>0</sub> + kt</code></td><td>1/[A] vs t</td><td><code>t<sub>1/2</sub> = 1 / k[A]<sub>0</sub></code></td><td>1/(M&middot;s)</td></tr>
+  </table>
+
+  <div class="callout callout-warning"><strong>Common Mistake:</strong> Only first-order reactions have a constant half-life. For zero and second order, the half-life depends on the initial concentration.</div>
+
+  <h3>Arrhenius Equation</h3>
+  <p>The rate constant k depends on temperature according to the Arrhenius equation: <code>k = Ae<sup>&minus;E<sub>a</sub>/RT</sup></code>, where A is the frequency factor, E<sub>a</sub> is the activation energy, R is the gas constant (8.314 J/mol&middot;K), and T is temperature in Kelvin. The two-point form is <code>ln(k<sub>2</sub>/k<sub>1</sub>) = (E<sub>a</sub>/R)(1/T<sub>1</sub> &minus; 1/T<sub>2</sub>)</code>.</p>
+
+  <div class="callout callout-example"><strong>Example:</strong> If a reaction's rate doubles when temperature increases by 10&deg;C, this reflects the exponential dependence of k on temperature described by Arrhenius. A small T increase causes a large k increase when E<sub>a</sub> is significant.</div>
+
+  <h3>Reaction Mechanisms &amp; Catalysis</h3>
+  <p>A mechanism is a step-by-step sequence of elementary reactions that add up to the overall reaction. The slowest step is the rate-determining step, and the rate law for the overall reaction matches the rate law of this step. Intermediates appear in the mechanism but not in the overall equation. A catalyst speeds up a reaction by lowering E<sub>a</sub> without being consumed. Catalysts provide an alternative pathway but do not change the thermodynamics (&Delta;G, K<sub>eq</sub>) of the reaction.</p>
+
+  <div class="callout callout-mnemonic"><strong>Remember:</strong> Catalysts lower the hill (E<sub>a</sub>), they don't change the destination (&Delta;G).</div>
+</div>
+
+<!-- SECTION 2: EQUILIBRIUM -->
+<div class="section-card" id="equilibrium">
+  <h2><span class="num">02</span> Chemical Equilibrium</h2>
+  <p>At equilibrium, the forward and reverse reactions proceed at equal rates, so the concentrations of reactants and products remain constant (not necessarily equal). The equilibrium constant K quantifies this balance.</p>
+
+  <h3>The Equilibrium Expression</h3>
+  <p>For a reaction <code>aA + bB &harr; cC + dD</code>, the equilibrium expression is <code>K<sub>c</sub> = [C]<sup>c</sup>[D]<sup>d</sup> / [A]<sup>a</sup>[B]<sup>b</sup></code>. Only aqueous and gaseous species appear in the expression. Pure solids and pure liquids are excluded because their concentrations are constant. When using partial pressures instead: <code>K<sub>p</sub> = K<sub>c</sub>(RT)<sup>&Delta;n</sup></code>, where &Delta;n is the change in moles of gas (products minus reactants).</p>
+
+  <div class="callout callout-key"><strong>Key Point:</strong> K &gt; 1 means products are favored at equilibrium. K &lt; 1 means reactants are favored. K says nothing about how fast equilibrium is reached.</div>
+
+  <h3>The Reaction Quotient Q</h3>
+  <p>Q has the same form as K but uses current (non-equilibrium) concentrations. Comparing Q to K tells you the direction the reaction will shift: if Q &lt; K, the reaction shifts right (toward products); if Q &gt; K, it shifts left (toward reactants); if Q = K, the system is at equilibrium.</p>
+
+  <h3>Le Ch&acirc;telier's Principle</h3>
+  <p>When a system at equilibrium is disturbed, it shifts in the direction that partially counteracts the disturbance. Adding reactant shifts right. Removing product shifts right. Increasing pressure (by decreasing volume) shifts toward the side with fewer moles of gas. Increasing temperature shifts in the endothermic direction (treats heat as a reactant for endothermic, as a product for exothermic).</p>
+
+  <div class="callout callout-warning"><strong>Common Mistake:</strong> Adding a catalyst does NOT shift the equilibrium. It speeds up both forward and reverse reactions equally, so equilibrium is reached faster, but K is unchanged.</div>
+
+  <h3>ICE Tables</h3>
+  <p>ICE (Initial, Change, Equilibrium) tables are the standard tool for solving equilibrium problems. Write initial concentrations, express changes in terms of x using stoichiometric ratios, then write equilibrium expressions. Substitute into K and solve for x. If K is very small compared to initial concentrations, you can often use the approximation that x is negligible.</p>
+
+  <div class="callout callout-example"><strong>Example:</strong> If K<sub>c</sub> = 4.0 &times; 10<sup>&minus;3</sup> and [A]<sub>0</sub> = 0.50 M, you can likely assume 0.50 &minus; x &asymp; 0.50 because K is small. Always verify that x is &lt; 5% of the initial value.</div>
+</div>
+
+<!-- SECTION 3: ACIDS & BASES -->
+<div class="section-card" id="acids-bases">
+  <h2><span class="num">03</span> Acids &amp; Bases</h2>
+
+  <h3>Definitions</h3>
+  <p>Arrhenius: acids produce H<sup>+</sup> in water, bases produce OH<sup>&minus;</sup>. Br&oslash;nsted-Lowry (more general): acids are proton donors, bases are proton acceptors. Lewis (most general): acids are electron pair acceptors, bases are electron pair donors.</p>
+
+  <h3>Strong vs. Weak</h3>
+  <p>Strong acids dissociate completely: HCl, HBr, HI, HNO<sub>3</sub>, H<sub>2</sub>SO<sub>4</sub>, HClO<sub>3</sub>, HClO<sub>4</sub>. Strong bases dissociate completely: Group 1 hydroxides (LiOH, NaOH, KOH) and the heavier Group 2 hydroxides (Ca(OH)<sub>2</sub>, Sr(OH)<sub>2</sub>, Ba(OH)<sub>2</sub>). Everything else is weak and only partially dissociates.</p>
+
+  <div class="callout callout-mnemonic"><strong>Memorize the 7 Strong Acids:</strong> HCl, HBr, HI, HNO<sub>3</sub>, H<sub>2</sub>SO<sub>4</sub>, HClO<sub>3</sub>, HClO<sub>4</sub>. If it's not on this list, it's weak.</div>
+
+  <h3>pH, pOH, and the Water Autoionization</h3>
+  <p>Water autoionizes: <code>K<sub>w</sub> = [H<sup>+</sup>][OH<sup>&minus;</sup>] = 1.0 &times; 10<sup>&minus;14</sup></code> at 25&deg;C. From this: <code>pH + pOH = 14</code>. The p-function means "negative log": <code>pH = &minus;log[H<sup>+</sup>]</code>. For strong acids, [H<sup>+</sup>] equals the acid concentration directly. For weak acids, you must solve the K<sub>a</sub> equilibrium.</p>
+
+  <div class="formula-block">
+    pH = &minus;log[H<sup>+</sup>] &nbsp;&nbsp;&middot;&nbsp;&nbsp; pOH = &minus;log[OH<sup>&minus;</sup>] &nbsp;&nbsp;&middot;&nbsp;&nbsp; pH + pOH = 14.00
+  </div>
+
+  <h3>K<sub>a</sub>, K<sub>b</sub>, and Conjugate Pairs</h3>
+  <p>For a weak acid HA: <code>K<sub>a</sub> = [H<sup>+</sup>][A<sup>&minus;</sup>] / [HA]</code>. For the conjugate base A<sup>&minus;</sup>: <code>K<sub>b</sub> = [HA][OH<sup>&minus;</sup>] / [A<sup>&minus;</sup>]</code>. The two are related by <code>K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub></code>. A strong acid has a very weak conjugate base, and vice versa.</p>
+
+  <div class="callout callout-key"><strong>Key Point:</strong> K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub> = 1.0 &times; 10<sup>&minus;14</sup> for any conjugate acid-base pair at 25&deg;C.</div>
+
+  <h3>Polyprotic Acids</h3>
+  <p>Polyprotic acids (like H<sub>2</sub>SO<sub>4</sub>, H<sub>3</sub>PO<sub>4</sub>, H<sub>2</sub>CO<sub>3</sub>) donate protons in steps. Each step has its own K<sub>a</sub>, and K<sub>a1</sub> &gt;&gt; K<sub>a2</sub> &gt;&gt; K<sub>a3</sub>. For calculating pH, the first dissociation usually dominates, and subsequent dissociations can often be ignored.</p>
+
+  <h3>Salt Hydrolysis</h3>
+  <p>When salts dissolve, the resulting ions may react with water. The cation of a weak base is acidic. The anion of a weak acid is basic. Salts of strong acid + strong base are neutral (NaCl). Salts of weak acid + strong base are basic (NaCH<sub>3</sub>COO). Salts of strong acid + weak base are acidic (NH<sub>4</sub>Cl). Salts of weak acid + weak base require comparing K<sub>a</sub> and K<sub>b</sub>.</p>
+
+  <div class="callout callout-example"><strong>Example:</strong> Sodium acetate (NaCH<sub>3</sub>COO) dissolves to give Na<sup>+</sup> (spectator) and CH<sub>3</sub>COO<sup>&minus;</sup> (conjugate base of the weak acid acetic acid). The acetate ion hydrolyzes: CH<sub>3</sub>COO<sup>&minus;</sup> + H<sub>2</sub>O &harr; CH<sub>3</sub>COOH + OH<sup>&minus;</sup>, making the solution basic.</div>
+</div>
+
+<!-- SECTION 4: BUFFERS & TITRATIONS -->
+<div class="section-card" id="buffers">
+  <h2><span class="num">04</span> Buffers &amp; Titrations</h2>
+
+  <h3>What is a Buffer?</h3>
+  <p>A buffer is a solution that resists changes in pH when small amounts of acid or base are added. It contains a weak acid and its conjugate base (or a weak base and its conjugate acid) in appreciable concentrations. The buffer works because the weak acid neutralizes added base, while the conjugate base neutralizes added acid.</p>
+
+  <h3>Henderson-Hasselbalch Equation</h3>
+  <div class="formula-block">
+    pH = pK<sub>a</sub> + log([A<sup>&minus;</sup>] / [HA])
+  </div>
+  <p>This equation is the workhorse for buffer calculations. When [A<sup>&minus;</sup>] = [HA], the log term is zero and pH = pK<sub>a</sub>. Buffers work best when the pH is within &plusmn;1 unit of the pK<sub>a</sub>, and when both components are present in reasonable concentrations.</p>
+
+  <div class="callout callout-key"><strong>Key Point:</strong> At the half-equivalence point of a titration, exactly half the acid has been neutralized, so [HA] = [A<sup>&minus;</sup>] and pH = pK<sub>a</sub>.</div>
+
+  <h3>Titration Curves</h3>
+  <p>A titration curve plots pH versus volume of titrant added. The shape depends on the acid-base combination:</p>
+
+  <table class="ref-table">
+    <tr><th>Titration Type</th><th>Initial pH</th><th>Equivalence Point pH</th><th>Indicator Choice</th></tr>
+    <tr><td>Strong acid + Strong base</td><td>Low (acidic)</td><td>7.00</td><td>Phenolphthalein or bromthymol blue</td></tr>
+    <tr><td>Weak acid + Strong base</td><td>Moderately low</td><td>&gt; 7 (basic)</td><td>Phenolphthalein</td></tr>
+    <tr><td>Strong acid + Weak base</td><td>Moderately high</td><td>&lt; 7 (acidic)</td><td>Methyl red</td></tr>
+  </table>
+
+  <div class="callout callout-warning"><strong>Common Mistake:</strong> The equivalence point is NOT always pH 7. It is only 7 for strong acid/strong base titrations. For weak acid/strong base, the equivalence point is basic because the conjugate base hydrolyzes.</div>
+
+  <h3>Buffer Capacity</h3>
+  <p>Buffer capacity is the amount of acid or base a buffer can absorb before its pH changes significantly. It depends on the total concentration of the buffer components (higher concentration = greater capacity) and on how close the ratio of [A<sup>&minus;</sup>]/[HA] is to 1 (maximum capacity at pH = pK<sub>a</sub>).</p>
+</div>
+
+<!-- SECTION 5: SOLUBILITY EQUILIBRIA -->
+<div class="section-card" id="solubility">
+  <h2><span class="num">05</span> Solubility Equilibria</h2>
+
+  <h3>K<sub>sp</sub> (Solubility Product)</h3>
+  <p>For a sparingly soluble salt <code>A<sub>m</sub>B<sub>n</sub>(s) &harr; mA<sup>n+</sup>(aq) + nB<sup>m&minus;</sup>(aq)</code>, the solubility product is <code>K<sub>sp</sub> = [A<sup>n+</sup>]<sup>m</sup>[B<sup>m&minus;</sup>]<sup>n</sup></code>. The solid does not appear in the expression. A smaller K<sub>sp</sub> means a less soluble salt.</p>
+
+  <div class="callout callout-example"><strong>Example:</strong> For AgCl(s) &harr; Ag<sup>+</sup>(aq) + Cl<sup>&minus;</sup>(aq), K<sub>sp</sub> = [Ag<sup>+</sup>][Cl<sup>&minus;</sup>]. If s = molar solubility, then K<sub>sp</sub> = s<sup>2</sup>. For Ag<sub>2</sub>CrO<sub>4</sub>: K<sub>sp</sub> = [Ag<sup>+</sup>]<sup>2</sup>[CrO<sub>4</sub><sup>2&minus;</sup>] = (2s)<sup>2</sup>(s) = 4s<sup>3</sup>.</div>
+
+  <h3>Predicting Precipitation</h3>
+  <p>Calculate the ion product Q using the same form as K<sub>sp</sub> but with current concentrations. If Q &gt; K<sub>sp</sub>, precipitation occurs. If Q &lt; K<sub>sp</sub>, no precipitate forms (solution is unsaturated). If Q = K<sub>sp</sub>, the solution is exactly saturated.</p>
+
+  <h3>Common Ion Effect</h3>
+  <p>Adding an ion that is already present in the equilibrium shifts the equilibrium to the left (Le Ch&acirc;telier's), decreasing solubility. For example, adding NaCl to a saturated AgCl solution decreases the solubility of AgCl because the extra Cl<sup>&minus;</sup> pushes the equilibrium back toward the solid.</p>
+
+  <h3>pH and Solubility</h3>
+  <p>Salts containing basic anions (OH<sup>&minus;</sup>, CO<sub>3</sub><sup>2&minus;</sup>, S<sup>2&minus;</sup>, PO<sub>4</sub><sup>3&minus;</sup>) are more soluble in acidic solutions. The acid reacts with the anion, removing it from solution and shifting the equilibrium to dissolve more solid. Salts with anions from strong acids (Cl<sup>&minus;</sup>, NO<sub>3</sub><sup>&minus;</sup>) are unaffected by pH.</p>
+</div>
+
+<!-- SECTION 6: THERMODYNAMICS -->
+<div class="section-card" id="thermo">
+  <h2><span class="num">06</span> Thermodynamics</h2>
+
+  <h3>Entropy (S)</h3>
+  <p>Entropy is a measure of the dispersal of energy and matter. The second law of thermodynamics states that the total entropy of the universe always increases for a spontaneous process. For the system: <code>&Delta;S&deg;<sub>rxn</sub> = &Sigma;S&deg;(products) &minus; &Sigma;S&deg;(reactants)</code>.</p>
+
+  <p>Entropy increases when: solids melt to liquids, liquids evaporate to gases, solids dissolve, the number of moles of gas increases, and temperature increases.</p>
+
+  <div class="callout callout-mnemonic"><strong>Remember:</strong> More particles, more space, more motion = more entropy. Gas &gt; Liquid &gt; Solid.</div>
+
+  <h3>Gibbs Free Energy (&Delta;G)</h3>
+  <p>Free energy combines enthalpy and entropy to predict spontaneity: <code>&Delta;G = &Delta;H &minus; T&Delta;S</code>. A process is spontaneous when &Delta;G &lt; 0, nonspontaneous when &Delta;G &gt; 0, and at equilibrium when &Delta;G = 0.</p>
+
+  <table class="ref-table">
+    <tr><th>&Delta;H</th><th>&Delta;S</th><th>Spontaneous?</th></tr>
+    <tr><td>&minus; (exothermic)</td><td>+ (entropy increase)</td><td>Always spontaneous</td></tr>
+    <tr><td>+ (endothermic)</td><td>&minus; (entropy decrease)</td><td>Never spontaneous</td></tr>
+    <tr><td>&minus;</td><td>&minus;</td><td>Spontaneous at low T</td></tr>
+    <tr><td>+</td><td>+</td><td>Spontaneous at high T</td></tr>
+  </table>
+
+  <h3>Standard Free Energy</h3>
+  <div class="formula-block">
+    &Delta;G&deg;<sub>rxn</sub> = &Sigma;&Delta;G&deg;<sub>f</sub>(products) &minus; &Sigma;&Delta;G&deg;<sub>f</sub>(reactants)<br>
+    &Delta;G&deg; = &minus;RT ln K<br>
+    &Delta;G = &Delta;G&deg; + RT ln Q
+  </div>
+
+  <div class="callout callout-key"><strong>Key Point:</strong> &Delta;G&deg; = &minus;RT ln K connects thermodynamics to equilibrium. When K &gt; 1, &Delta;G&deg; is negative (products favored). When K &lt; 1, &Delta;G&deg; is positive.</div>
+</div>
+
+<!-- SECTION 7: ELECTROCHEMISTRY -->
+<div class="section-card" id="electrochem">
+  <h2><span class="num">07</span> Electrochemistry</h2>
+
+  <h3>Galvanic (Voltaic) Cells</h3>
+  <p>A galvanic cell converts chemical energy into electrical energy through a spontaneous redox reaction. The anode is where oxidation occurs (negative terminal), and the cathode is where reduction occurs (positive terminal). Electrons flow from anode to cathode through the external circuit. A salt bridge maintains electrical neutrality.</p>
+
+  <div class="callout callout-mnemonic"><strong>Remember:</strong> "An Ox, Red Cat" = Anode is Oxidation, Reduction at Cathode. Also: "LEO the lion says GER" = Lose Electrons Oxidation, Gain Electrons Reduction.</div>
+
+  <h3>Standard Reduction Potentials</h3>
+  <p>The standard cell potential is: <code>E&deg;<sub>cell</sub> = E&deg;<sub>cathode</sub> &minus; E&deg;<sub>anode</sub></code>. Both values come from the standard reduction potential table. A positive E&deg;<sub>cell</sub> means the reaction is spontaneous. The standard hydrogen electrode (SHE) is defined as 0.00 V. More positive E&deg; means a stronger oxidizing agent (more easily reduced).</p>
+
+  <div class="callout callout-warning"><strong>Common Mistake:</strong> Never multiply E&deg; by stoichiometric coefficients. Standard potentials are intensive properties.</div>
+
+  <h3>Connecting E&deg;, &Delta;G&deg;, and K</h3>
+  <div class="formula-block">
+    &Delta;G&deg; = &minus;nFE&deg;<sub>cell</sub><br>
+    E&deg;<sub>cell</sub> = (RT / nF) ln K &nbsp;&nbsp; or &nbsp;&nbsp; E&deg;<sub>cell</sub> = (0.0257 V / n) ln K at 25&deg;C
+  </div>
+  <p>Here, n is the number of moles of electrons transferred and F is Faraday's constant (96,485 C/mol e<sup>&minus;</sup>). These three quantities are all connected: if one is known, the other two can be calculated.</p>
+
+  <h3>The Nernst Equation</h3>
+  <div class="formula-block">
+    E<sub>cell</sub> = E&deg;<sub>cell</sub> &minus; (RT / nF) ln Q &nbsp;&nbsp; or &nbsp;&nbsp; E<sub>cell</sub> = E&deg;<sub>cell</sub> &minus; (0.0592 V / n) log Q at 25&deg;C
+  </div>
+  <p>The Nernst equation adjusts cell potential for non-standard conditions. At equilibrium, E<sub>cell</sub> = 0 and Q = K.</p>
+
+  <h3>Electrolytic Cells</h3>
+  <p>Electrolytic cells use electrical energy to drive nonspontaneous reactions. The setup is reversed compared to galvanic cells: an external power source forces electrons in the non-spontaneous direction. Applications include electroplating, electrolysis of water, and purification of metals. Faraday's law relates charge to the amount of substance: <code>moles of substance = It / nF</code>, where I is current (amps), t is time (seconds).</p>
+</div>
+
+<!-- SECTION 8: NUCLEAR CHEMISTRY -->
+<div class="section-card" id="nuclear">
+  <h2><span class="num">08</span> Nuclear Chemistry</h2>
+
+  <h3>Types of Radioactive Decay</h3>
+  <table class="ref-table">
+    <tr><th>Type</th><th>Particle</th><th>Symbol</th><th>Mass # Change</th><th>Atomic # Change</th></tr>
+    <tr><td>Alpha (&alpha;)</td><td>Helium nucleus</td><td><code><sup>4</sup><sub>2</sub>He</code></td><td>&minus;4</td><td>&minus;2</td></tr>
+    <tr><td>Beta (&beta;<sup>&minus;</sup>)</td><td>Electron</td><td><code><sup>0</sup><sub>&minus;1</sub>e</code></td><td>0</td><td>+1</td></tr>
+    <tr><td>Positron (&beta;<sup>+</sup>)</td><td>Positron</td><td><code><sup>0</sup><sub>+1</sub>e</code></td><td>0</td><td>&minus;1</td></tr>
+    <tr><td>Gamma (&gamma;)</td><td>Photon</td><td><code><sup>0</sup><sub>0</sub>&gamma;</code></td><td>0</td><td>0</td></tr>
+    <tr><td>Electron capture</td><td>Inner electron absorbed</td><td><code><sup>0</sup><sub>&minus;1</sub>e</code></td><td>0</td><td>&minus;1</td></tr>
+  </table>
+
+  <h3>Nuclear Stability</h3>
+  <p>The band of stability is the region on a plot of neutrons vs. protons where stable nuclei exist. Nuclei above the band (too many neutrons) undergo beta decay. Nuclei below the band (too few neutrons) undergo positron emission or electron capture. Heavy nuclei (Z &gt; 83) undergo alpha decay. Magic numbers (2, 8, 20, 28, 50, 82, 126) correspond to especially stable nuclei.</p>
+
+  <h3>Half-Life and Kinetics</h3>
+  <p>Radioactive decay follows first-order kinetics: <code>N = N<sub>0</sub>e<sup>&minus;&lambda;t</sup></code>, where &lambda; is the decay constant. Half-life: <code>t<sub>1/2</sub> = 0.693 / &lambda;</code>. After n half-lives, the fraction remaining is (1/2)<sup>n</sup>.</p>
+
+  <div class="callout callout-example"><strong>Example:</strong> If a sample has a half-life of 5 years, after 15 years (3 half-lives), the fraction remaining is (1/2)<sup>3</sup> = 1/8 of the original amount.</div>
+
+  <h3>Mass-Energy Equivalence</h3>
+  <p>Nuclear binding energy comes from the mass defect: <code>&Delta;m = Z(m<sub>p</sub>) + N(m<sub>n</sub>) &minus; m<sub>atom</sub></code>. The energy equivalent is <code>E = (&Delta;m)c<sup>2</sup></code>. Iron-56 has the highest binding energy per nucleon, making it the most stable nucleus. Fission splits heavy nuclei; fusion combines light nuclei. Both release energy because the products are closer to Fe-56 on the binding energy curve.</p>
+</div>
+
+<!-- SECTION 9: CONSTANTS & FORMULAS -->
+<div class="section-card" id="constants">
+  <h2><span class="num">09</span> Constants &amp; Key Formulas</h2>
+
+  <h3>Essential Constants</h3>
+  <table class="ref-table">
+    <tr><th>Constant</th><th>Value</th></tr>
+    <tr><td>Gas constant (R)</td><td><code>8.314 J/(mol&middot;K)</code> &nbsp;or&nbsp; <code>0.08206 L&middot;atm/(mol&middot;K)</code></td></tr>
+    <tr><td>Faraday's constant (F)</td><td><code>96,485 C/mol e<sup>&minus;</sup></code></td></tr>
+    <tr><td>K<sub>w</sub> (at 25&deg;C)</td><td><code>1.0 &times; 10<sup>&minus;14</sup></code></td></tr>
+    <tr><td>Avogadro's number (N<sub>A</sub>)</td><td><code>6.022 &times; 10<sup>23</sup> mol<sup>&minus;1</sup></code></td></tr>
+    <tr><td>Speed of light (c)</td><td><code>3.00 &times; 10<sup>8</sup> m/s</code></td></tr>
+    <tr><td>SHE potential</td><td><code>0.00 V (by definition)</code></td></tr>
+    <tr><td>Standard temperature</td><td><code>25&deg;C = 298.15 K</code></td></tr>
+    <tr><td>Standard pressure</td><td><code>1 atm = 101.325 kPa</code></td></tr>
+  </table>
+
+  <h3>Master Formula Reference</h3>
+  <table class="ref-table">
+    <tr><th>Topic</th><th>Formula</th></tr>
+    <tr><td>Rate law</td><td><code>Rate = k[A]<sup>m</sup>[B]<sup>n</sup></code></td></tr>
+    <tr><td>Arrhenius</td><td><code>k = Ae<sup>&minus;E<sub>a</sub>/RT</sup></code></td></tr>
+    <tr><td>Arrhenius (two-point)</td><td><code>ln(k<sub>2</sub>/k<sub>1</sub>) = (E<sub>a</sub>/R)(1/T<sub>1</sub> &minus; 1/T<sub>2</sub>)</code></td></tr>
+    <tr><td>K<sub>p</sub> and K<sub>c</sub></td><td><code>K<sub>p</sub> = K<sub>c</sub>(RT)<sup>&Delta;n</sup></code></td></tr>
+    <tr><td>pH</td><td><code>pH = &minus;log[H<sup>+</sup>]</code></td></tr>
+    <tr><td>Henderson-Hasselbalch</td><td><code>pH = pK<sub>a</sub> + log([A<sup>&minus;</sup>]/[HA])</code></td></tr>
+    <tr><td>K<sub>a</sub> &middot; K<sub>b</sub></td><td><code>K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub></code></td></tr>
+    <tr><td>Gibbs free energy</td><td><code>&Delta;G = &Delta;H &minus; T&Delta;S</code></td></tr>
+    <tr><td>Free energy &amp; K</td><td><code>&Delta;G&deg; = &minus;RT ln K</code></td></tr>
+    <tr><td>Free energy &amp; E&deg;</td><td><code>&Delta;G&deg; = &minus;nFE&deg;</code></td></tr>
+    <tr><td>Nernst equation</td><td><code>E = E&deg; &minus; (0.0592/n) log Q</code></td></tr>
+    <tr><td>Radioactive decay</td><td><code>N = N<sub>0</sub>e<sup>&minus;&lambda;t</sup></code></td></tr>
+    <tr><td>Nuclear half-life</td><td><code>t<sub>1/2</sub> = 0.693/&lambda;</code></td></tr>
+    <tr><td>Faraday's law</td><td><code>mol = It / nF</code></td></tr>
+  </table>
+</div>
+
+<!-- SECTION 10: PRACTICE -->
+<div class="section-card" id="practice">
+  <h2><span class="num">10</span> Practice &amp; Review</h2>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('quiz')">Multiple Choice</button>
+    <button class="tab-btn" onclick="switchTab('flash')">Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('sa')">Short Answer</button>
+  </div>
+
+  <!-- QUIZ TAB -->
+  <div class="tab-panel active" id="tab-quiz">
+    <div class="quiz-score" id="quiz-score">Score: 0 / 0</div>
+    <div id="quiz-container"></div>
+  </div>
+
+  <!-- FLASHCARD TAB -->
+  <div class="tab-panel" id="tab-flash">
+    <div class="filter-btns" id="fc-filters"></div>
+    <div class="fc-grid" id="fc-container"></div>
+  </div>
+
+  <!-- SHORT ANSWER TAB -->
+  <div class="tab-panel" id="tab-sa">
+    <div id="sa-container"></div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===================== TAB SWITCHING =====================
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['quiz','flash','sa'][i] === tab));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', ['tab-quiz','tab-flash','tab-sa'][i] === 'tab-'+tab));
+}
+
+// ===================== QUIZ DATA =====================
+const quizData = [
+  {q:"For a first-order reaction, which plot gives a straight line?", opts:["[A] vs t","ln[A] vs t","1/[A] vs t","[A]² vs t"], ans:1, exp:"First-order: ln[A] = ln[A]₀ − kt, so ln[A] vs t is linear with slope −k."},
+  {q:"What are the units of the rate constant k for a second-order reaction?", opts:["M/s","1/s","1/(M·s)","M²/s"], ans:2, exp:"Second-order rate = k[A]², so k = rate/[A]² = (M/s)/M² = 1/(M·s)."},
+  {q:"A catalyst affects a reaction by:", opts:["Increasing ΔG","Lowering activation energy","Shifting equilibrium toward products","Increasing the equilibrium constant"], ans:1, exp:"Catalysts lower Ea, providing an alternative pathway. They do not change K or ΔG."},
+  {q:"If Q < K for a reaction at some point in time, the reaction will:", opts:["Shift left","Be at equilibrium","Shift right","Stop completely"], ans:2, exp:"Q < K means there are not enough products relative to equilibrium, so the reaction shifts right (forward)."},
+  {q:"Adding an inert gas at constant volume to a system at equilibrium will:", opts:["Shift toward products","Shift toward reactants","Have no effect","Increase K"], ans:2, exp:"An inert gas at constant volume does not change the partial pressures or concentrations of reactants/products, so no shift occurs."},
+  {q:"Which is NOT a strong acid?", opts:["HCl","HNO₃","HF","HClO₄"], ans:2, exp:"HF is a weak acid. The 7 strong acids are HCl, HBr, HI, HNO₃, H₂SO₄, HClO₃, HClO₄."},
+  {q:"The pH of a 0.010 M NaOH solution is:", opts:["2.0","10.0","12.0","14.0"], ans:2, exp:"[OH⁻] = 0.010 M, pOH = −log(0.010) = 2.0, pH = 14.0 − 2.0 = 12.0."},
+  {q:"For a conjugate acid-base pair, Ka × Kb equals:", opts:["1","14","Kw (1.0 × 10⁻¹⁴)","It depends on the pair"], ans:2, exp:"Ka × Kb = Kw = 1.0 × 10⁻¹⁴ at 25°C for any conjugate pair."},
+  {q:"At the half-equivalence point of a weak acid-strong base titration:", opts:["pH = 7","pH = pKa","pH = pKb","All acid is neutralized"], ans:1, exp:"At half-equivalence, [HA] = [A⁻], so pH = pKa + log(1) = pKa."},
+  {q:"The equivalence point of a weak acid-strong base titration has a pH that is:", opts:["Equal to 7","Less than 7","Greater than 7","Equal to pKa"], ans:2, exp:"At equivalence, only the conjugate base remains, which hydrolyzes to produce OH⁻, making pH > 7."},
+  {q:"A buffer solution is prepared from:", opts:["A strong acid and its conjugate base","A weak acid and a strong acid","A weak acid and its conjugate base","Two strong acids"], ans:2, exp:"Buffers require a weak acid/base and its conjugate partner in appreciable amounts."},
+  {q:"Increasing the concentration of a common ion will:", opts:["Increase solubility","Decrease solubility","Have no effect on solubility","Increase Ksp"], ans:1, exp:"The common ion effect shifts equilibrium left (Le Châtelier's), reducing solubility. Ksp itself is unchanged."},
+  {q:"A salt with Ksp = 2.0 × 10⁻¹⁰ is mixed into a solution where Q = 5.0 × 10⁻⁸. What happens?", opts:["More salt dissolves","Nothing, system is at equilibrium","Precipitation occurs","Ksp increases"], ans:2, exp:"Q > Ksp means the solution is supersaturated and precipitation will occur to reduce ion concentrations."},
+  {q:"Which change always increases entropy?", opts:["Freezing","Gas → liquid","Solid → gas","Decreasing temperature"], ans:2, exp:"Sublimation (solid → gas) dramatically increases the dispersal of matter and energy."},
+  {q:"A reaction with ΔH > 0 and ΔS > 0 is spontaneous:", opts:["At all temperatures","At high temperatures","At low temperatures","Never"], ans:1, exp:"ΔG = ΔH − TΔS. When both are positive, high T makes the −TΔS term dominate, giving ΔG < 0."},
+  {q:"If ΔG° is negative, the equilibrium constant K is:", opts:["Less than 1","Equal to 1","Greater than 1","Zero"], ans:2, exp:"ΔG° = −RT ln K. If ΔG° < 0, then ln K > 0, so K > 1."},
+  {q:"In a galvanic cell, oxidation occurs at the:", opts:["Cathode","Anode","Salt bridge","Both electrodes"], ans:1, exp:"An Ox, Red Cat: Anode = Oxidation, Cathode = Reduction."},
+  {q:"The standard cell potential E°cell is calculated as:", opts:["E°anode + E°cathode","E°cathode − E°anode","E°anode − E°cathode","E°cathode × E°anode"], ans:1, exp:"E°cell = E°cathode − E°anode, using standard reduction potentials for both."},
+  {q:"Standard reduction potentials should NOT be:", opts:["Looked up in a table","Multiplied by stoichiometric coefficients","Used to calculate ΔG°","Compared to determine spontaneity"], ans:1, exp:"E° is an intensive property and does not depend on the amount of substance. Never multiply by coefficients."},
+  {q:"At equilibrium, the cell potential of a galvanic cell is:", opts:["Maximum","Zero","Equal to E°","Negative"], ans:1, exp:"At equilibrium, ΔG = 0, so Ecell = 0 (the battery is dead)."},
+  {q:"The Nernst equation is used to calculate:", opts:["Standard cell potential","Cell potential under non-standard conditions","Activation energy","Equilibrium constant only"], ans:1, exp:"The Nernst equation: E = E° − (RT/nF)ln Q adjusts for non-standard concentrations."},
+  {q:"In alpha decay, the mass number of the parent nucleus:", opts:["Stays the same","Decreases by 2","Decreases by 4","Increases by 4"], ans:2, exp:"An alpha particle is ⁴₂He, so the parent loses 4 from mass number and 2 from atomic number."},
+  {q:"Beta decay converts a:", opts:["Proton to a neutron","Neutron to a proton","Neutron to an electron","Proton to a positron"], ans:1, exp:"In beta (β⁻) decay, a neutron becomes a proton plus an electron (and antineutrino). Atomic number increases by 1."},
+  {q:"Radioactive decay follows which order kinetics?", opts:["Zero order","First order","Second order","Third order"], ans:1, exp:"Radioactive decay is always first-order: N = N₀e^(−λt), with constant half-life."},
+  {q:"After 4 half-lives, what fraction of a radioactive sample remains?", opts:["1/4","1/8","1/16","1/32"], ans:2, exp:"Fraction remaining = (1/2)⁴ = 1/16."},
+  {q:"The most stable nucleus (highest binding energy per nucleon) is:", opts:["Hydrogen-1","Helium-4","Iron-56","Uranium-238"], ans:2, exp:"Fe-56 sits at the peak of the binding energy per nucleon curve, making it the most stable."},
+  {q:"For the reaction N₂O₄(g) ⇌ 2NO₂(g), increasing the volume at equilibrium will:", opts:["Shift left","Shift right","No change","Decrease K"], ans:1, exp:"Increasing volume decreases pressure. The system shifts toward more moles of gas (right: 2 mol vs 1 mol)."},
+  {q:"What is the pH of a buffer made from 0.30 M acetic acid (Ka = 1.8 × 10⁻⁵) and 0.30 M sodium acetate?", opts:["4.74","7.00","9.26","3.50"], ans:0, exp:"pH = pKa + log([A⁻]/[HA]) = −log(1.8 × 10⁻⁵) + log(1) = 4.74 + 0 = 4.74."},
+  {q:"In an electrolytic cell, the energy input comes from:", opts:["A spontaneous reaction","An external power source","A salt bridge","Thermal energy"], ans:1, exp:"Electrolytic cells use external electrical energy to drive nonspontaneous reactions."},
+  {q:"Which type of radiation has the highest penetrating power?", opts:["Alpha","Beta","Gamma","All equal"], ans:2, exp:"Gamma rays are high-energy photons with no mass or charge, giving them the highest penetrating ability. Alpha is least penetrating."}
+];
+
+// ===================== QUIZ RENDERER =====================
+let quizCorrect = 0, quizAnswered = 0;
+function renderQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = quizData.map((q, i) => `
+    <div class="quiz-card" id="qcard-${i}">
+      <div class="q-num">Question ${i+1} of ${quizData.length}</div>
+      <p>${q.q}</p>
+      <div class="quiz-options">${q.opts.map((o,j) => `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}</div>
+      <button class="quiz-submit" onclick="checkQuiz(${i})">Check Answer</button>
+      <div class="quiz-feedback" id="qfb-${i}"></div>
+    </div>
+  `).join('');
+}
+function checkQuiz(i) {
+  const sel = document.querySelector(`input[name="q${i}"]:checked`);
+  if (!sel) return;
+  const fb = document.getElementById(`qfb-${i}`);
+  const card = document.getElementById(`qcard-${i}`);
+  const correct = parseInt(sel.value) === quizData[i].ans;
+  if (correct) quizCorrect++;
+  quizAnswered++;
+  fb.className = 'quiz-feedback ' + (correct ? 'correct' : 'incorrect');
+  fb.innerHTML = (correct ? '✓ Correct!' : '✗ Incorrect.') + ' ' + quizData[i].exp;
+  fb.style.display = 'block';
+  card.querySelectorAll('input').forEach(inp => inp.disabled = true);
+  card.querySelector('.quiz-submit').disabled = true;
+  document.getElementById('quiz-score').textContent = `Score: ${quizCorrect} / ${quizAnswered}`;
+}
+renderQuiz();
+
+// ===================== FLASHCARD DATA =====================
+const fcData = [
+  {cat:"Kinetics", front:"What is the rate-determining step?", back:"The slowest step in a reaction mechanism. The overall rate law matches this step's rate law."},
+  {cat:"Kinetics", front:"First-order half-life formula", back:"t₁/₂ = 0.693 / k. It is constant and independent of initial concentration."},
+  {cat:"Kinetics", front:"Arrhenius equation", back:"k = Ae^(−Ea/RT). Relates the rate constant to temperature and activation energy."},
+  {cat:"Kinetics", front:"How do you determine reaction order?", back:"Use the method of initial rates: compare experiments where one reactant's concentration changes while others are held constant."},
+  {cat:"Kinetics", front:"Zero-order integrated rate law", back:"[A] = [A]₀ − kt. Plot [A] vs t for a straight line."},
+  {cat:"Kinetics", front:"Effect of a catalyst on Ea and K", back:"Lowers Ea (faster rate) but does NOT change K or ΔG."},
+  {cat:"Kinetics", front:"What is an intermediate?", back:"A species produced in one step and consumed in a later step. Appears in the mechanism but not the overall equation."},
+  {cat:"Equilibrium", front:"What does K > 1 mean?", back:"Products are favored at equilibrium. The reaction lies to the right."},
+  {cat:"Equilibrium", front:"Q vs K: Q < K", back:"Reaction shifts right (forward) to produce more products until Q = K."},
+  {cat:"Equilibrium", front:"Le Châtelier: add reactant", back:"Equilibrium shifts right (toward products) to consume the added reactant."},
+  {cat:"Equilibrium", front:"Le Châtelier: increase temperature (exothermic rxn)", back:"Shifts left. Heat is a product for exothermic reactions; adding heat shifts away from products."},
+  {cat:"Equilibrium", front:"Kp and Kc relationship", back:"Kp = Kc(RT)^Δn, where Δn = moles gas products − moles gas reactants."},
+  {cat:"Equilibrium", front:"What is excluded from K expressions?", back:"Pure solids and pure liquids. Only aqueous and gaseous species are included."},
+  {cat:"Equilibrium", front:"ICE table: what does ICE stand for?", back:"Initial, Change, Equilibrium. A systematic method for solving equilibrium problems."},
+  {cat:"Acids & Bases", front:"List the 7 strong acids", back:"HCl, HBr, HI, HNO₃, H₂SO₄, HClO₃, HClO₄"},
+  {cat:"Acids & Bases", front:"Ka × Kb = ?", back:"Kw = 1.0 × 10⁻¹⁴ (at 25°C) for any conjugate acid-base pair."},
+  {cat:"Acids & Bases", front:"pH + pOH = ?", back:"14.00 at 25°C (because Kw = 10⁻¹⁴)."},
+  {cat:"Acids & Bases", front:"Brønsted-Lowry acid definition", back:"A proton (H⁺) donor."},
+  {cat:"Acids & Bases", front:"Lewis acid definition", back:"An electron pair acceptor."},
+  {cat:"Acids & Bases", front:"pH of 0.001 M HCl", back:"pH = −log(0.001) = 3.0. HCl is a strong acid, so [H⁺] = 0.001 M."},
+  {cat:"Acids & Bases", front:"Salt of weak acid + strong base: acidic, basic, or neutral?", back:"Basic. The conjugate base of the weak acid hydrolyzes with water to produce OH⁻."},
+  {cat:"Acids & Bases", front:"Ka1 vs Ka2 for polyprotic acids", back:"Ka1 >> Ka2 >> Ka3. Each successive proton is harder to remove."},
+  {cat:"Buffers", front:"Henderson-Hasselbalch equation", back:"pH = pKa + log([A⁻]/[HA])"},
+  {cat:"Buffers", front:"When does pH = pKa?", back:"When [A⁻] = [HA], i.e., at the half-equivalence point of a titration."},
+  {cat:"Buffers", front:"Equivalence point pH: weak acid + strong base", back:"Greater than 7 (basic), because the conjugate base hydrolyzes."},
+  {cat:"Buffers", front:"What makes a good buffer?", back:"A weak acid and its conjugate base at concentrations within a factor of 10 of each other. pH should be within ±1 of pKa."},
+  {cat:"Buffers", front:"Equivalence point pH: strong acid + strong base", back:"Exactly 7.00. No hydrolysis occurs."},
+  {cat:"Solubility", front:"Ksp expression for Ag₂CrO₄", back:"Ksp = [Ag⁺]²[CrO₄²⁻] = (2s)²(s) = 4s³"},
+  {cat:"Solubility", front:"If Q > Ksp, what happens?", back:"Precipitation occurs. The solution is supersaturated."},
+  {cat:"Solubility", front:"Common ion effect on solubility", back:"Adding a common ion decreases solubility by shifting the dissolution equilibrium left."},
+  {cat:"Solubility", front:"Effect of acid on salts with basic anions", back:"Increases solubility. The acid reacts with the basic anion, removing it and shifting equilibrium right."},
+  {cat:"Solubility", front:"Ksp expression for Ca₃(PO₄)₂", back:"Ksp = [Ca²⁺]³[PO₄³⁻]² = (3s)³(2s)² = 108s⁵"},
+  {cat:"Thermo", front:"Second law of thermodynamics", back:"The total entropy of the universe always increases for a spontaneous process."},
+  {cat:"Thermo", front:"ΔG = ΔH − TΔS: when is rxn always spontaneous?", back:"When ΔH < 0 (exothermic) and ΔS > 0 (entropy increases). ΔG is always negative."},
+  {cat:"Thermo", front:"ΔG° = −RT ln K: what if K > 1?", back:"ΔG° is negative (products favored under standard conditions)."},
+  {cat:"Thermo", front:"At equilibrium, ΔG = ?", back:"ΔG = 0 (not ΔG°, which can be nonzero)."},
+  {cat:"Thermo", front:"Entropy order: solid, liquid, gas", back:"S°(gas) > S°(liquid) > S°(solid). More disorder = more entropy."},
+  {cat:"Thermo", front:"ΔG° and E°cell relationship", back:"ΔG° = −nFE°cell. If E°cell > 0, then ΔG° < 0 (spontaneous)."},
+  {cat:"Electrochem", front:"E°cell formula", back:"E°cell = E°cathode − E°anode (using standard reduction potentials)."},
+  {cat:"Electrochem", front:"An Ox, Red Cat", back:"Anode = Oxidation, Cathode = Reduction."},
+  {cat:"Electrochem", front:"Faraday's constant", back:"F = 96,485 C/mol e⁻. The charge of one mole of electrons."},
+  {cat:"Electrochem", front:"Nernst equation (25°C)", back:"E = E° − (0.0592/n) log Q"},
+  {cat:"Electrochem", front:"At equilibrium, Ecell = ?", back:"Ecell = 0. The battery is dead; Q = K."},
+  {cat:"Electrochem", front:"Galvanic vs electrolytic cell", back:"Galvanic: spontaneous, produces electricity. Electrolytic: nonspontaneous, requires external power."},
+  {cat:"Electrochem", front:"Do you multiply E° by coefficients?", back:"NO. Standard potentials are intensive properties and are not multiplied by stoichiometric coefficients."},
+  {cat:"Electrochem", front:"Faraday's law", back:"mol substance = It / nF, where I = current (A), t = time (s), n = mol e⁻ per mol substance."},
+  {cat:"Nuclear", front:"Alpha decay: mass and atomic number change", back:"Mass number −4, atomic number −2. The alpha particle is ⁴₂He."},
+  {cat:"Nuclear", front:"Beta (β⁻) decay: what happens?", back:"A neutron converts to a proton. Mass number unchanged, atomic number +1."},
+  {cat:"Nuclear", front:"Most stable nucleus", back:"Iron-56 (⁵⁶Fe). Highest binding energy per nucleon."},
+  {cat:"Nuclear", front:"Radioactive decay kinetics", back:"First-order: N = N₀e^(−λt). Half-life = 0.693/λ."},
+  {cat:"Nuclear", front:"After 3 half-lives, fraction remaining?", back:"(1/2)³ = 1/8 of the original sample."},
+  {cat:"Nuclear", front:"Fission vs fusion", back:"Fission: heavy nuclei split. Fusion: light nuclei combine. Both release energy because products move toward Fe-56 stability."},
+  {cat:"Nuclear", front:"Gamma radiation", back:"High-energy photons. No mass, no charge, highest penetrating power."},
+  {cat:"Nuclear", front:"Band of stability: too many neutrons", back:"The nucleus undergoes beta (β⁻) decay to convert a neutron to a proton."},
+  {cat:"Nuclear", front:"Magic numbers", back:"2, 8, 20, 28, 50, 82, 126. Nuclei with these proton or neutron counts are especially stable."}
+];
+
+// ===================== FLASHCARD RENDERER =====================
+const fcCategories = [...new Set(fcData.map(f => f.cat))];
+let fcFilter = 'All';
+function renderFlashcards() {
+  const filters = document.getElementById('fc-filters');
+  filters.innerHTML = ['All', ...fcCategories].map(c =>
+    `<button class="filter-btn ${fcFilter === c ? 'active' : ''}" onclick="setFcFilter('${c}')">${c}</button>`
+  ).join('');
+  const container = document.getElementById('fc-container');
+  const filtered = fcFilter === 'All' ? fcData : fcData.filter(f => f.cat === fcFilter);
+  container.innerHTML = filtered.map((f, i) => `
+    <div class="fc-card" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><span class="fc-cat">${f.cat}</span>${f.front}</div>
+        <div class="fc-back">${f.back}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function setFcFilter(cat) { fcFilter = cat; renderFlashcards(); }
+renderFlashcards();
+
+// ===================== SHORT ANSWER DATA =====================
+const saData = [
+  {
+    q: "Explain the difference between the rate of a reaction and the rate constant. How does temperature affect each?",
+    concepts: [
+      {term:"rate measures concentration change over time", synonyms:["rate is change in concentration","rate = delta concentration","speed of reaction"], weight:2},
+      {term:"rate constant k is specific to a given temperature", synonyms:["k depends on temperature","k is temperature-dependent","rate constant changes with temp"], weight:2},
+      {term:"rate depends on both k and concentrations", synonyms:["rate depends on concentration","rate = k times concentration"], weight:2},
+      {term:"increasing temperature increases k via Arrhenius", synonyms:["higher temp higher k","temperature increases rate constant","arrhenius equation"], weight:2},
+      {term:"rate can change as concentrations change but k stays constant at fixed T", synonyms:["k constant at given temperature","rate varies k fixed"], weight:1}
+    ],
+    model: "The rate of a reaction describes how quickly reactant concentrations decrease (or product concentrations increase) over time, expressed in units of M/s. It depends on both the rate constant k and the current concentrations of reactants. The rate constant k, on the other hand, is a proportionality constant specific to a given reaction at a given temperature. While the rate changes as the reaction proceeds (because concentrations change), k remains constant at a fixed temperature. Increasing temperature increases k exponentially according to the Arrhenius equation (k = Ae^(−Ea/RT)), which in turn increases the rate."
+  },
+  {
+    q: "A system at equilibrium is subjected to three changes: (a) a reactant is added, (b) the volume is decreased, and (c) a catalyst is added. Explain the effect of each on the position of equilibrium and on K.",
+    concepts: [
+      {term:"adding reactant shifts equilibrium toward products", synonyms:["shifts right when reactant added","more reactant shifts forward"], weight:2},
+      {term:"decreasing volume increases pressure shifts toward fewer moles of gas", synonyms:["smaller volume shifts to fewer gas moles","pressure increase shifts to fewer moles"], weight:2},
+      {term:"catalyst does not shift equilibrium", synonyms:["catalyst no effect on position","catalyst speeds both directions equally"], weight:2},
+      {term:"K is unchanged by all three changes at constant temperature", synonyms:["K does not change","equilibrium constant unchanged","K only changes with temperature"], weight:3}
+    ],
+    model: "Adding a reactant increases Q momentarily, but since we're adding to the denominator of Q... actually, adding reactant makes Q < K, so the system shifts right (toward products) to re-establish equilibrium. K itself does not change. Decreasing the volume increases the total pressure, and by Le Châtelier's principle the system shifts toward the side with fewer moles of gas. Again, K is unchanged. Adding a catalyst speeds up both the forward and reverse reactions equally, allowing equilibrium to be reached faster, but it does not shift the position of equilibrium and does not change K. The key takeaway is that K only changes with temperature."
+  },
+  {
+    q: "Compare and contrast Ka, Kb, and Kw. How are they mathematically related for a conjugate acid-base pair?",
+    concepts: [
+      {term:"Ka is the acid dissociation constant for a weak acid", synonyms:["Ka measures acid strength","Ka = [H+][A-]/[HA]"], weight:2},
+      {term:"Kb is the base dissociation constant for a weak base", synonyms:["Kb measures base strength","Kb = [BH+][OH-]/[B]"], weight:2},
+      {term:"Kw is the ion product of water equal to 1.0e-14 at 25C", synonyms:["Kw = [H+][OH-]","autoionization constant","10^-14"], weight:2},
+      {term:"Ka times Kb equals Kw for a conjugate pair", synonyms:["Ka Kb = Kw","product of Ka and Kb is Kw"], weight:3},
+      {term:"strong acid has very weak conjugate base", synonyms:["large Ka means small Kb","inverse relationship"], weight:1}
+    ],
+    model: "Ka is the equilibrium constant for the dissociation of a weak acid in water (HA ⇌ H⁺ + A⁻), and a larger Ka indicates a stronger acid. Kb is the analogous constant for a weak base accepting a proton from water (B + H₂O ⇌ BH⁺ + OH⁻). Kw is the autoionization constant of water ([H⁺][OH⁻] = 1.0 × 10⁻¹⁴ at 25°C). For any conjugate acid-base pair, Ka × Kb = Kw. This means a strong acid (large Ka) has a very weak conjugate base (small Kb), and vice versa."
+  },
+  {
+    q: "Describe how a buffer works at the molecular level. Why does a buffer fail if too much strong acid or base is added?",
+    concepts: [
+      {term:"buffer contains weak acid and its conjugate base", synonyms:["weak acid plus conjugate base","HA and A-"], weight:2},
+      {term:"weak acid neutralizes added base", synonyms:["HA reacts with OH-","acid component neutralizes base"], weight:2},
+      {term:"conjugate base neutralizes added acid", synonyms:["A- reacts with H+","base component neutralizes acid"], weight:2},
+      {term:"Henderson-Hasselbalch pH = pKa + log ratio", synonyms:["Henderson Hasselbalch","pH depends on ratio of A- to HA"], weight:1},
+      {term:"buffer fails when one component is consumed completely", synonyms:["overwhelmed when all acid or base used up","capacity exceeded","runs out of one component"], weight:2}
+    ],
+    model: "A buffer contains significant amounts of both a weak acid (HA) and its conjugate base (A⁻). When strong acid (H⁺) is added, the conjugate base A⁻ reacts with it (A⁻ + H⁺ → HA), converting it to the weak acid and preventing a large pH drop. When strong base (OH⁻) is added, the weak acid HA reacts with it (HA + OH⁻ → A⁻ + H₂O), preventing a large pH increase. The pH is governed by the Henderson-Hasselbalch equation: pH = pKa + log([A⁻]/[HA]). The buffer fails when enough strong acid or base is added to completely consume one of the two components, leaving no buffering capacity in that direction."
+  },
+  {
+    q: "Explain the relationship between ΔG°, E°cell, and K. If you know one of these values, how can you determine the other two?",
+    concepts: [
+      {term:"delta G naught equals negative nFE cell", synonyms:["ΔG° = −nFE°","free energy from cell potential"], weight:3},
+      {term:"delta G naught equals negative RT ln K", synonyms:["ΔG° = −RT ln K","free energy from equilibrium constant"], weight:3},
+      {term:"E cell naught equals RT over nF times ln K", synonyms:["E° = (RT/nF)ln K","cell potential from K"], weight:2},
+      {term:"all three are interconvertible", synonyms:["knowing one gives the other two","triangle relationship","connected quantities"], weight:1},
+      {term:"spontaneous when E positive delta G negative K greater than 1", synonyms:["positive E means spontaneous","negative deltaG means spontaneous","K > 1 spontaneous"], weight:2}
+    ],
+    model: "These three quantities are all connected through two key equations: ΔG° = −nFE°cell and ΔG° = −RT ln K. Combining them gives E°cell = (RT/nF) ln K, or at 25°C, E°cell = (0.0257/n) ln K. If you know any one value, you can calculate the other two. For a spontaneous reaction under standard conditions: E°cell > 0, ΔG° < 0, and K > 1. For a nonspontaneous reaction: E°cell < 0, ΔG° > 0, and K < 1. n is the number of moles of electrons transferred, F is Faraday's constant (96,485 C/mol), R is the gas constant (8.314 J/mol·K), and T is temperature in Kelvin."
+  },
+  {
+    q: "Describe the differences between a galvanic cell and an electrolytic cell in terms of spontaneity, sign of E°cell, and the role of the external circuit.",
+    concepts: [
+      {term:"galvanic cell is spontaneous with positive E cell", synonyms:["voltaic cell spontaneous","galvanic E° > 0","spontaneous redox"], weight:2},
+      {term:"electrolytic cell is nonspontaneous requires external power", synonyms:["electrolytic needs electricity","nonspontaneous reaction driven by external source"], weight:2},
+      {term:"galvanic produces electrical energy from chemical energy", synonyms:["galvanic generates electricity","chemical to electrical"], weight:2},
+      {term:"electrolytic uses electrical energy to drive chemical change", synonyms:["electrolytic electrical to chemical","electricity forces reaction"], weight:2},
+      {term:"both have anode oxidation and cathode reduction", synonyms:["anode oxidation cathode reduction in both","An Ox Red Cat"], weight:1}
+    ],
+    model: "A galvanic (voltaic) cell uses a spontaneous redox reaction (E°cell > 0, ΔG° < 0) to produce electrical energy. Electrons flow spontaneously from anode to cathode through an external circuit, doing useful work. An electrolytic cell drives a nonspontaneous reaction (E°cell < 0, ΔG° > 0) using an external power source that forces electrons in the reverse direction. In both cell types, oxidation occurs at the anode and reduction occurs at the cathode, but the charge signs of the electrodes are reversed: in galvanic cells the anode is negative and cathode positive, while in electrolytic cells the external source makes the anode positive and cathode negative."
+  },
+  {
+    q: "Explain why the solubility of a salt like CaF₂ decreases when NaF is added to the solution, but increases when HCl is added.",
+    concepts: [
+      {term:"common ion effect: NaF adds F- which shifts equilibrium left", synonyms:["extra fluoride shifts dissolution left","common ion decreases solubility","Le Chatelier common ion"], weight:3},
+      {term:"HCl provides H+ which reacts with F- the basic anion", synonyms:["acid reacts with fluoride","H+ neutralizes F-","protonation of conjugate base"], weight:3},
+      {term:"removing F- by protonation shifts equilibrium right dissolving more CaF2", synonyms:["consuming F- dissolves more salt","equilibrium shifts right when anion removed"], weight:2},
+      {term:"Ksp itself does not change in either case", synonyms:["Ksp unchanged","Ksp constant at given temperature"], weight:1}
+    ],
+    model: "CaF₂ dissolves according to CaF₂(s) ⇌ Ca²⁺(aq) + 2F⁻(aq). When NaF is added, it provides additional F⁻ ions (common ion effect). The increased [F⁻] makes Q > Ksp, so the equilibrium shifts left and CaF₂ precipitates, effectively decreasing its solubility. When HCl is added, the H⁺ ions react with F⁻ (a basic anion, conjugate base of the weak acid HF): H⁺ + F⁻ → HF. This removes F⁻ from solution, making Q < Ksp, so the equilibrium shifts right and more CaF₂ dissolves, increasing solubility. In both cases, Ksp itself remains unchanged at constant temperature."
+  },
+  {
+    q: "Compare alpha, beta, and gamma radiation in terms of composition, charge, mass, and penetrating power. Which type of decay would you expect from a nucleus with too many neutrons?",
+    concepts: [
+      {term:"alpha is helium nucleus charge +2 most massive least penetrating", synonyms:["alpha 4He2+","alpha heavy low penetration","alpha stopped by paper"], weight:2},
+      {term:"beta is electron charge -1 moderate penetrating power", synonyms:["beta electron","beta moderate penetration","stopped by aluminum"], weight:2},
+      {term:"gamma is photon no charge no mass most penetrating", synonyms:["gamma electromagnetic radiation","gamma highest penetration","needs lead or concrete"], weight:2},
+      {term:"too many neutrons leads to beta decay converting neutron to proton", synonyms:["neutron rich beta decay","neutron becomes proton in beta","above band of stability beta decay"], weight:3}
+    ],
+    model: "Alpha particles (⁴₂He) are the heaviest, with charge +2 and mass number 4. They have the least penetrating power and can be stopped by a sheet of paper. Beta particles (⁰₋₁e) are electrons emitted when a neutron converts to a proton. They have charge −1, negligible mass, and moderate penetrating power (stopped by aluminum). Gamma rays (⁰₀γ) are high-energy photons with no mass and no charge, and they have the greatest penetrating power (require thick lead or concrete to stop). A nucleus with too many neutrons (above the band of stability) undergoes beta (β⁻) decay, converting a neutron into a proton to move back toward stability."
+  }
+];
+
+// ===================== SHORT ANSWER RENDERER =====================
+function renderSA() {
+  const c = document.getElementById('sa-container');
+  c.innerHTML = saData.map((q, i) => `
+    <div class="sa-card">
+      <div class="q-num" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);margin-bottom:.5rem;">Question ${i+1} of ${saData.length}</div>
+      <p style="font-weight:500;">${q.q}</p>
+      <textarea id="sa-input-${i}" placeholder="Type your answer here..."></textarea>
+      <button class="sa-grade-btn" onclick="gradeSA(${i})">Grade Answer</button>
+      <div class="sa-result" id="sa-result-${i}"></div>
+    </div>
+  `).join('');
+}
+function gradeSA(i) {
+  const input = document.getElementById(`sa-input-${i}`).value.toLowerCase().trim();
+  if (!input) return;
+  const result = document.getElementById(`sa-result-${i}`);
+  const q = saData[i];
+  let earned = 0, total = 0, tags = [];
+  q.concepts.forEach(c => {
+    total += c.weight;
+    const allTerms = [c.term, ...c.synonyms];
+    const hit = allTerms.some(t => {
+      const words = t.toLowerCase().split(/\s+/);
+      if (words.length <= 2) return input.includes(t.toLowerCase());
+      const keyWords = words.filter(w => w.length > 3);
+      const matched = keyWords.filter(w => input.includes(w));
+      return matched.length >= Math.ceil(keyWords.length * 0.6);
+    });
+    if (hit) earned += c.weight;
+    tags.push({label: c.term.substring(0, 50), hit});
+  });
+  const wordCount = input.split(/\s+/).length;
+  const bonus = Math.min(wordCount / 80, 0.1) * total;
+  const pct = Math.min(Math.round(((earned + bonus) / total) * 100), 100);
+  const color = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--amber)' : 'var(--coral)';
+
+  result.style.display = 'block';
+  result.innerHTML = `
+    <div style="font-weight:600;font-size:1.05rem;color:${color};">${pct}%</div>
+    <div class="sa-bar"><div class="sa-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '✓' : '○'} ${t.label}</span>`).join('')}</div>
+    <details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${q.model}</div></details>
+  `;
+}
+renderSA();
+</script>
+</body>
+</html>
