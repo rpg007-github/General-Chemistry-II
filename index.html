@@ -139,9 +139,40 @@
       .fc-grid { grid-template-columns: 1fr; }
       .toc-grid { grid-template-columns: 1fr; }
     }
-  </style>
+  
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+</style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <div class="hero">
   <h1>General Chemistry II</h1>
@@ -149,7 +180,7 @@
   <div class="badge"> Essential Reference</div>
 </div>
 
-<div class="container">
+<div class="container" id="main-content" role="main">
 
 <!-- TABLE OF CONTENTS -->
 <div class="toc">
@@ -489,7 +520,7 @@ const quizData = [
   {q:"A buffer solution is prepared from:", opts:["A strong acid and its conjugate base","A weak acid and a strong acid","A weak acid and its conjugate base","Two strong acids"], ans:2, exp:"Buffers require a weak acid/base and its conjugate partner in appreciable amounts."},
   {q:"Increasing the concentration of a common ion will:", opts:["Increase solubility","Decrease solubility","Have no effect on solubility","Increase Ksp"], ans:1, exp:"The common ion effect shifts equilibrium left (Le Châtelier's), reducing solubility. Ksp itself is unchanged."},
   {q:"A salt with Ksp = 2.0 × 10⁻¹⁰ is mixed into a solution where Q = 5.0 × 10⁻⁸. What happens?", opts:["More salt dissolves","Nothing, system is at equilibrium","Precipitation occurs","Ksp increases"], ans:2, exp:"Q > Ksp means the solution is supersaturated and precipitation will occur to reduce ion concentrations."},
-  {q:"Which change always increases entropy?", opts:["Freezing","Gas → liquid","Solid → gas","Decreasing temperature"], ans:2, exp:"Sublimation (solid → gas) dramatically increases the dispersal of matter and energy."},
+  {q:"Which change always increases entropy?", opts:["Freezing","Gas <span aria-hidden="true">→</span> liquid","Solid <span aria-hidden="true">→</span> gas","Decreasing temperature"], ans:2, exp:"Sublimation (solid <span aria-hidden="true">→</span> gas) dramatically increases the dispersal of matter and energy."},
   {q:"A reaction with ΔH > 0 and ΔS > 0 is spontaneous:", opts:["At all temperatures","At high temperatures","At low temperatures","Never"], ans:1, exp:"ΔG = ΔH − TΔS. When both are positive, high T makes the −TΔS term dominate, giving ΔG < 0."},
   {q:"If ΔG° is negative, the equilibrium constant K is:", opts:["Less than 1","Equal to 1","Greater than 1","Zero"], ans:2, exp:"ΔG° = −RT ln K. If ΔG° < 0, then ln K > 0, so K > 1."},
   {q:"In a galvanic cell, oxidation occurs at the:", opts:["Cathode","Anode","Salt bridge","Both electrodes"], ans:1, exp:"An Ox, Red Cat: Anode = Oxidation, Cathode = Reduction."},
@@ -502,7 +533,7 @@ const quizData = [
   {q:"Radioactive decay follows which order kinetics?", opts:["Zero order","First order","Second order","Third order"], ans:1, exp:"Radioactive decay is always first-order: N = N₀e^(−λt), with constant half-life."},
   {q:"After 4 half-lives, what fraction of a radioactive sample remains?", opts:["1/4","1/8","1/16","1/32"], ans:2, exp:"Fraction remaining = (1/2)⁴ = 1/16."},
   {q:"The most stable nucleus (highest binding energy per nucleon) is:", opts:["Hydrogen-1","Helium-4","Iron-56","Uranium-238"], ans:2, exp:"Fe-56 sits at the peak of the binding energy per nucleon curve, making it the most stable."},
-  {q:"For the reaction N₂O₄(g) ⇌ 2NO₂(g), increasing the volume at equilibrium will:", opts:["Shift left","Shift right","No change","Decrease K"], ans:1, exp:"Increasing volume decreases pressure. The system shifts toward more moles of gas (right: 2 mol vs 1 mol)."},
+  {q:"For the reaction N₂O₄(g) <span aria-hidden="true">⇌</span> 2NO₂(g), increasing the volume at equilibrium will:", opts:["Shift left","Shift right","No change","Decrease K"], ans:1, exp:"Increasing volume decreases pressure. The system shifts toward more moles of gas (right: 2 mol vs 1 mol)."},
   {q:"What is the pH of a buffer made from 0.30 M acetic acid (Ka = 1.8 × 10⁻⁵) and 0.30 M sodium acetate?", opts:["4.74","7.00","9.26","3.50"], ans:0, exp:"pH = pKa + log([A⁻]/[HA]) = −log(1.8 × 10⁻⁵) + log(1) = 4.74 + 0 = 4.74."},
   {q:"In an electrolytic cell, the energy input comes from:", opts:["A spontaneous reaction","An external power source","A salt bridge","Thermal energy"], ans:1, exp:"Electrolytic cells use external electrical energy to drive nonspontaneous reactions."},
   {q:"Which type of radiation has the highest penetrating power?", opts:["Alpha","Beta","Gamma","All equal"], ans:2, exp:"Gamma rays are high-energy photons with no mass or charge, giving them the highest penetrating ability. Alpha is least penetrating."}
@@ -531,7 +562,7 @@ function checkQuiz(i) {
   if (correct) quizCorrect++;
   quizAnswered++;
   fb.className = 'quiz-feedback ' + (correct ? 'correct' : 'incorrect');
-  fb.innerHTML = (correct ? '✓ Correct!' : '✗ Incorrect.') + ' ' + quizData[i].exp;
+  fb.innerHTML = (correct ? '<span aria-hidden="true">✓</span> Correct!' : '<span aria-hidden="true">✗</span> Incorrect.') + ' ' + quizData[i].exp;
   fb.style.display = 'block';
   card.querySelectorAll('input').forEach(inp => inp.disabled = true);
   card.querySelector('.quiz-submit').disabled = true;
@@ -695,7 +726,7 @@ const saData = [
       {term:"removing F- by protonation shifts equilibrium right dissolving more CaF2", synonyms:["consuming F- dissolves more salt","equilibrium shifts right when anion removed"], weight:2},
       {term:"Ksp itself does not change in either case", synonyms:["Ksp unchanged","Ksp constant at given temperature"], weight:1}
     ],
-    model: "CaF₂ dissolves according to CaF₂(s) ⇌ Ca²⁺(aq) + 2F⁻(aq). When NaF is added, it provides additional F⁻ ions (common ion effect). The increased [F⁻] makes Q > Ksp, so the equilibrium shifts left and CaF₂ precipitates, effectively decreasing its solubility. When HCl is added, the H⁺ ions react with F⁻ (a basic anion, conjugate base of the weak acid HF): H⁺ + F⁻ → HF. This removes F⁻ from solution, making Q < Ksp, so the equilibrium shifts right and more CaF₂ dissolves, increasing solubility. In both cases, Ksp itself remains unchanged at constant temperature."
+    model: "CaF₂ dissolves according to CaF₂(s) <span aria-hidden="true">⇌</span> Ca²⁺(aq) + 2F⁻(aq). When NaF is added, it provides additional F⁻ ions (common ion effect). The increased [F⁻] makes Q > Ksp, so the equilibrium shifts left and CaF₂ precipitates, effectively decreasing its solubility. When HCl is added, the H⁺ ions react with F⁻ (a basic anion, conjugate base of the weak acid HF): H⁺ + F⁻ <span aria-hidden="true">→</span> HF. This removes F⁻ from solution, making Q < Ksp, so the equilibrium shifts right and more CaF₂ dissolves, increasing solubility. In both cases, Ksp itself remains unchanged at constant temperature."
   },
   {
     q: "Compare alpha, beta, and gamma radiation in terms of composition, charge, mass, and penetrating power. Which type of decay would you expect from a nucleus with too many neutrons?",
@@ -750,7 +781,7 @@ function gradeSA(i) {
   result.innerHTML = `
     <div style="font-weight:600;font-size:1.05rem;color:${color};">${pct}%</div>
     <div class="sa-bar"><div class="sa-bar-fill" style="width:${pct}%;background:${color};"></div></div>
-    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '✓' : '○'} ${t.label}</span>`).join('')}</div>
+    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '<span aria-hidden="true">✓</span>' : '<span aria-hidden="true">○</span>'} ${t.label}</span>`).join('')}</div>
     <details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${q.model}</div></details>
   `;
 }
@@ -758,7 +789,7 @@ renderSA();
 </script>
 
   <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
-  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;">⚠️ Important Notice</div>
+  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
   <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
   <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
   <p style="margin: 0 0 10px 0;">No guarantees are made regarding the completeness, accuracy, or reliability of any information presented on these sites. Use at your own discretion. If you spot an error, we appreciate you letting us know so it can be corrected.</p>
