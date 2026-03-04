@@ -19,9 +19,9 @@
       --highlight: #fef9e7;
       --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
       --shadow-hover: 0 2px 8px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
-      --green: #1e8449;
+      --green: #147832;  /* deepened: 4.29→5.76:1 on green-light */
       --green-light: #e8f8f0;
-      --amber: #b7950b;
+      --amber: #8c6400;  /* deepened: 2.72→5.06:1 on amber-light */
       --amber-light: #fef9e7;
       --coral: #c0392b;
       --coral-light: #fdedec;
@@ -127,7 +127,7 @@
     .sa-concepts { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
     .sa-tag { font-size: .8rem; padding: .2rem .55rem; border-radius: 12px; font-weight: 500; }
     .sa-tag.hit { background: var(--green-light); color: var(--green); }
-    .sa-tag.miss { background: #f0f0f0; color: #999; }
+    .sa-tag.miss { background: #f0f0f0; color: #646464; }  /* deepened: 2.50→5.19:1 */
     .sa-model { margin-top: .75rem; }
     .sa-model summary { cursor: pointer; color: var(--accent); font-weight: 500; font-size: .9rem; }
     .sa-model .model-text { margin-top: .5rem; padding: .75rem 1rem; background: var(--accent-light); border-radius: 6px; font-size: .9rem; line-height: 1.6; }
@@ -168,17 +168,84 @@
   top: 0;
 }
 
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Disclaimer banner ─── */
+.disclaimer-banner {
+  background: #f9f6ef;
+  border-bottom: 1px solid #ddd;
+}
+.disclaimer-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.5rem 2rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+.disclaimer-toggle:hover { background: rgba(0,0,0,0.03); }
+.disc-arrow { transition: transform 0.3s; font-size: 0.7rem; }
+.disc-arrow.open { transform: rotate(180deg); }
+.disclaimer-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 2rem;
+}
+.disclaimer-body.open { max-height: 500px; padding: 0 2rem 1.2rem; }
+.disclaimer-body-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.disclaimer-body-inner p { margin-bottom: 0.5rem; }
+.disclaimer-body-inner p:last-child { margin-bottom: 0; }
+
 </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner" role="region" aria-label="Important disclaimer">
+  <button type="button" class="disclaimer-toggle" onclick="toggleDisclaimer()" aria-expanded="false" aria-controls="disc-body">
+    <span aria-hidden="true">⚠️</span>
+    <span>Important Disclaimer</span>
+    <span class="disc-arrow" id="disc-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="disclaimer-body" id="disc-body">
+    <div class="disclaimer-body-inner">
+      <p>These study resources are provided free of charge for educational purposes only. They are supplemental study aids and should not substitute your course textbooks, lectures, or instructor guidance.</p>
+      <p>While every effort has been made to ensure accuracy, this content may contain errors or outdated information. Science is constantly evolving — always verify facts and formulas against your official course materials.</p>
+      <p>No guarantees are made regarding completeness, accuracy, or reliability. Use at your own discretion. These materials are not affiliated with any university, testing organization, or textbook publisher.</p>
+    </div>
+  </div>
+</div>
 
-<div class="hero">
+
+<header class="hero" role="banner">
   <h1>General Chemistry II</h1>
   <p class="subtitle">The Facts You Just Know</p>
   <div class="badge"> Essential Reference</div>
-</div>
+</header>
 
 <div class="container" id="main-content" role="main">
 
@@ -186,22 +253,22 @@
 <div class="toc">
   <h2>Contents</h2>
   <div class="toc-grid">
-    <a href="#kinetics"><span class="num">01</span> Chemical Kinetics</a>
-    <a href="#equilibrium"><span class="num">02</span> Chemical Equilibrium</a>
-    <a href="#acids-bases"><span class="num">03</span> Acids &amp; Bases</a>
-    <a href="#buffers"><span class="num">04</span> Buffers &amp; Titrations</a>
-    <a href="#solubility"><span class="num">05</span> Solubility Equilibria</a>
-    <a href="#thermo"><span class="num">06</span> Thermodynamics</a>
-    <a href="#electrochem"><span class="num">07</span> Electrochemistry</a>
-    <a href="#nuclear"><span class="num">08</span> Nuclear Chemistry</a>
-    <a href="#constants"><span class="num">09</span> Constants &amp; Formulas</a>
-    <a href="#practice"><span class="num">10</span> Practice &amp; Review</a>
+    <a href="#kinetics"><span class="num" aria-hidden="true">01</span> Chemical Kinetics</a>
+    <a href="#equilibrium"><span class="num" aria-hidden="true">02</span> Chemical Equilibrium</a>
+    <a href="#acids-bases"><span class="num" aria-hidden="true">03</span> Acids &amp; Bases</a>
+    <a href="#buffers"><span class="num" aria-hidden="true">04</span> Buffers &amp; Titrations</a>
+    <a href="#solubility"><span class="num" aria-hidden="true">05</span> Solubility Equilibria</a>
+    <a href="#thermo"><span class="num" aria-hidden="true">06</span> Thermodynamics</a>
+    <a href="#electrochem"><span class="num" aria-hidden="true">07</span> Electrochemistry</a>
+    <a href="#nuclear"><span class="num" aria-hidden="true">08</span> Nuclear Chemistry</a>
+    <a href="#constants"><span class="num" aria-hidden="true">09</span> Constants &amp; Formulas</a>
+    <a href="#practice"><span class="num" aria-hidden="true">10</span> Practice &amp; Review</a>
   </div>
 </div>
 
 <!-- SECTION 1: KINETICS -->
 <div class="section-card" id="kinetics">
-  <h2><span class="num">01</span> Chemical Kinetics</h2>
+  <h2><span class="num" aria-hidden="true">01</span> Chemical Kinetics</h2>
   <p>Kinetics is the study of how fast reactions happen and what factors control that speed. The rate of a reaction tells you how quickly reactant concentrations decrease or product concentrations increase over time.</p>
 
   <h3>Reaction Rate</h3>
@@ -237,7 +304,7 @@
 
 <!-- SECTION 2: EQUILIBRIUM -->
 <div class="section-card" id="equilibrium">
-  <h2><span class="num">02</span> Chemical Equilibrium</h2>
+  <h2><span class="num" aria-hidden="true">02</span> Chemical Equilibrium</h2>
   <p>At equilibrium, the forward and reverse reactions proceed at equal rates, so the concentrations of reactants and products remain constant (not necessarily equal). The equilibrium constant K quantifies this balance.</p>
 
   <h3>The Equilibrium Expression</h3>
@@ -261,7 +328,7 @@
 
 <!-- SECTION 3: ACIDS & BASES -->
 <div class="section-card" id="acids-bases">
-  <h2><span class="num">03</span> Acids &amp; Bases</h2>
+  <h2><span class="num" aria-hidden="true">03</span> Acids &amp; Bases</h2>
 
   <h3>Definitions</h3>
   <p>Arrhenius: acids produce H<sup>+</sup> in water, bases produce OH<sup>&minus;</sup>. Br&oslash;nsted-Lowry (more general): acids are proton donors, bases are proton acceptors. Lewis (most general): acids are electron pair acceptors, bases are electron pair donors.</p>
@@ -294,7 +361,7 @@
 
 <!-- SECTION 4: BUFFERS & TITRATIONS -->
 <div class="section-card" id="buffers">
-  <h2><span class="num">04</span> Buffers &amp; Titrations</h2>
+  <h2><span class="num" aria-hidden="true">04</span> Buffers &amp; Titrations</h2>
 
   <h3>What is a Buffer?</h3>
   <p>A buffer is a solution that resists changes in pH when small amounts of acid or base are added. It contains a weak acid and its conjugate base (or a weak base and its conjugate acid) in appreciable concentrations. The buffer works because the weak acid neutralizes added base, while the conjugate base neutralizes added acid.</p>
@@ -325,7 +392,7 @@
 
 <!-- SECTION 5: SOLUBILITY EQUILIBRIA -->
 <div class="section-card" id="solubility">
-  <h2><span class="num">05</span> Solubility Equilibria</h2>
+  <h2><span class="num" aria-hidden="true">05</span> Solubility Equilibria</h2>
 
   <h3>K<sub>sp</sub> (Solubility Product)</h3>
   <p>For a sparingly soluble salt <code>A<sub>m</sub>B<sub>n</sub>(s) &harr; mA<sup>n+</sup>(aq) + nB<sup>m&minus;</sup>(aq)</code>, the solubility product is <code>K<sub>sp</sub> = [A<sup>n+</sup>]<sup>m</sup>[B<sup>m&minus;</sup>]<sup>n</sup></code>. The solid does not appear in the expression. A smaller K<sub>sp</sub> means a less soluble salt.</p>
@@ -344,7 +411,7 @@
 
 <!-- SECTION 6: THERMODYNAMICS -->
 <div class="section-card" id="thermo">
-  <h2><span class="num">06</span> Thermodynamics</h2>
+  <h2><span class="num" aria-hidden="true">06</span> Thermodynamics</h2>
 
   <h3>Entropy (S)</h3>
   <p>Entropy is a measure of the dispersal of energy and matter. The second law of thermodynamics states that the total entropy of the universe always increases for a spontaneous process. For the system: <code>&Delta;S&deg;<sub>rxn</sub> = &Sigma;S&deg;(products) &minus; &Sigma;S&deg;(reactants)</code>.</p>
@@ -376,7 +443,7 @@
 
 <!-- SECTION 7: ELECTROCHEMISTRY -->
 <div class="section-card" id="electrochem">
-  <h2><span class="num">07</span> Electrochemistry</h2>
+  <h2><span class="num" aria-hidden="true">07</span> Electrochemistry</h2>
 
   <h3>Galvanic (Voltaic) Cells</h3>
   <p>A galvanic cell converts chemical energy into electrical energy through a spontaneous redox reaction. The anode is where oxidation occurs (negative terminal), and the cathode is where reduction occurs (positive terminal). Electrons flow from anode to cathode through the external circuit. A salt bridge maintains electrical neutrality.</p>
@@ -407,7 +474,7 @@
 
 <!-- SECTION 8: NUCLEAR CHEMISTRY -->
 <div class="section-card" id="nuclear">
-  <h2><span class="num">08</span> Nuclear Chemistry</h2>
+  <h2><span class="num" aria-hidden="true">08</span> Nuclear Chemistry</h2>
 
   <h3>Types of Radioactive Decay</h3>
   <table class="ref-table">
@@ -433,7 +500,7 @@
 
 <!-- SECTION 9: CONSTANTS & FORMULAS -->
 <div class="section-card" id="constants">
-  <h2><span class="num">09</span> Constants &amp; Key Formulas</h2>
+  <h2><span class="num" aria-hidden="true">09</span> Constants &amp; Key Formulas</h2>
 
   <h3>Essential Constants</h3>
   <table class="ref-table">
@@ -470,12 +537,12 @@
 
 <!-- SECTION 10: PRACTICE -->
 <div class="section-card" id="practice">
-  <h2><span class="num">10</span> Practice &amp; Review</h2>
+  <h2><span class="num" aria-hidden="true">10</span> Practice &amp; Review</h2>
 
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('quiz')">Multiple Choice</button>
-    <button class="tab-btn" onclick="switchTab('flash')">Flashcards</button>
-    <button class="tab-btn" onclick="switchTab('sa')">Short Answer</button>
+  <div class="tab-nav" role="tablist" aria-label="Practice modes">
+    <button type="button" role="tab" aria-selected="true"  aria-controls="tab-quiz"  class="tab-btn active" onclick="switchTab('quiz')">Multiple Choice</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls="tab-flash" class="tab-btn" onclick="switchTab('flash')">Flashcards</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls="tab-sa"    class="tab-btn" onclick="switchTab('sa')">Short Answer</button>
   </div>
 
   <!-- QUIZ TAB -->
@@ -501,7 +568,12 @@
 <script>
 // ===================== TAB SWITCHING =====================
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['quiz','flash','sa'][i] === tab));
+  const tabs = ['quiz','flash','sa'];
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const active = tabs[i] === tab;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
   document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', ['tab-quiz','tab-flash','tab-sa'][i] === 'tab-'+tab));
 }
 
@@ -520,7 +592,7 @@ const quizData = [
   {q:"A buffer solution is prepared from:", opts:["A strong acid and its conjugate base","A weak acid and a strong acid","A weak acid and its conjugate base","Two strong acids"], ans:2, exp:"Buffers require a weak acid/base and its conjugate partner in appreciable amounts."},
   {q:"Increasing the concentration of a common ion will:", opts:["Increase solubility","Decrease solubility","Have no effect on solubility","Increase Ksp"], ans:1, exp:"The common ion effect shifts equilibrium left (Le Châtelier's), reducing solubility. Ksp itself is unchanged."},
   {q:"A salt with Ksp = 2.0 × 10⁻¹⁰ is mixed into a solution where Q = 5.0 × 10⁻⁸. What happens?", opts:["More salt dissolves","Nothing, system is at equilibrium","Precipitation occurs","Ksp increases"], ans:2, exp:"Q > Ksp means the solution is supersaturated and precipitation will occur to reduce ion concentrations."},
-  {q:"Which change always increases entropy?", opts:["Freezing","Gas <span aria-hidden="true">→</span> liquid","Solid <span aria-hidden="true">→</span> gas","Decreasing temperature"], ans:2, exp:"Sublimation (solid <span aria-hidden="true">→</span> gas) dramatically increases the dispersal of matter and energy."},
+  {q:"Which change always increases entropy?", opts:["Freezing","Gas <span aria-hidden='true'>→</span> liquid","Solid <span aria-hidden='true'>→</span> gas","Decreasing temperature"], ans:2, exp:"Sublimation (solid <span aria-hidden='true'>→</span> gas) dramatically increases the dispersal of matter and energy."},
   {q:"A reaction with ΔH > 0 and ΔS > 0 is spontaneous:", opts:["At all temperatures","At high temperatures","At low temperatures","Never"], ans:1, exp:"ΔG = ΔH − TΔS. When both are positive, high T makes the −TΔS term dominate, giving ΔG < 0."},
   {q:"If ΔG° is negative, the equilibrium constant K is:", opts:["Less than 1","Equal to 1","Greater than 1","Zero"], ans:2, exp:"ΔG° = −RT ln K. If ΔG° < 0, then ln K > 0, so K > 1."},
   {q:"In a galvanic cell, oxidation occurs at the:", opts:["Cathode","Anode","Salt bridge","Both electrodes"], ans:1, exp:"An Ox, Red Cat: Anode = Oxidation, Cathode = Reduction."},
@@ -533,7 +605,7 @@ const quizData = [
   {q:"Radioactive decay follows which order kinetics?", opts:["Zero order","First order","Second order","Third order"], ans:1, exp:"Radioactive decay is always first-order: N = N₀e^(−λt), with constant half-life."},
   {q:"After 4 half-lives, what fraction of a radioactive sample remains?", opts:["1/4","1/8","1/16","1/32"], ans:2, exp:"Fraction remaining = (1/2)⁴ = 1/16."},
   {q:"The most stable nucleus (highest binding energy per nucleon) is:", opts:["Hydrogen-1","Helium-4","Iron-56","Uranium-238"], ans:2, exp:"Fe-56 sits at the peak of the binding energy per nucleon curve, making it the most stable."},
-  {q:"For the reaction N₂O₄(g) <span aria-hidden="true">⇌</span> 2NO₂(g), increasing the volume at equilibrium will:", opts:["Shift left","Shift right","No change","Decrease K"], ans:1, exp:"Increasing volume decreases pressure. The system shifts toward more moles of gas (right: 2 mol vs 1 mol)."},
+  {q:"For the reaction N₂O₄(g) <span aria-hidden='true'>⇌</span> 2NO₂(g), increasing the volume at equilibrium will:", opts:["Shift left","Shift right","No change","Decrease K"], ans:1, exp:"Increasing volume decreases pressure. The system shifts toward more moles of gas (right: 2 mol vs 1 mol)."},
   {q:"What is the pH of a buffer made from 0.30 M acetic acid (Ka = 1.8 × 10⁻⁵) and 0.30 M sodium acetate?", opts:["4.74","7.00","9.26","3.50"], ans:0, exp:"pH = pKa + log([A⁻]/[HA]) = −log(1.8 × 10⁻⁵) + log(1) = 4.74 + 0 = 4.74."},
   {q:"In an electrolytic cell, the energy input comes from:", opts:["A spontaneous reaction","An external power source","A salt bridge","Thermal energy"], ans:1, exp:"Electrolytic cells use external electrical energy to drive nonspontaneous reactions."},
   {q:"Which type of radiation has the highest penetrating power?", opts:["Alpha","Beta","Gamma","All equal"], ans:2, exp:"Gamma rays are high-energy photons with no mass or charge, giving them the highest penetrating ability. Alpha is least penetrating."}
@@ -548,7 +620,7 @@ function renderQuiz() {
       <div class="q-num">Question ${i+1} of ${quizData.length}</div>
       <p>${q.q}</p>
       <div class="quiz-options">${q.opts.map((o,j) => `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}</div>
-      <button class="quiz-submit" onclick="checkQuiz(${i})">Check Answer</button>
+      <button type="button" class="quiz-submit" onclick="checkQuiz(${i})">Check Answer</button>
       <div class="quiz-feedback" id="qfb-${i}"></div>
     </div>
   `).join('');
@@ -640,14 +712,20 @@ function renderFlashcards() {
   const container = document.getElementById('fc-container');
   const filtered = fcFilter === 'All' ? fcData : fcData.filter(f => f.cat === fcFilter);
   container.innerHTML = filtered.map((f, i) => `
-    <div class="fc-card" onclick="this.classList.toggle('flipped')">
+    <div class="fc-card"
+         role="button"
+         tabindex="0"
+         aria-label="${f.front} — click or press Space to reveal answer"
+         onclick="flipCard(this)"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard(this);}">
       <div class="fc-inner">
-        <div class="fc-front"><span class="fc-cat">${f.cat}</span>${f.front}</div>
+        <div class="fc-front"><span class="fc-cat" aria-hidden='true'>${f.cat}</span>${f.front}</div>
         <div class="fc-back">${f.back}</div>
       </div>
     </div>
   `).join('');
 }
+function flipCard(el) { el.classList.toggle('flipped'); el.setAttribute('aria-label', el.classList.contains('flipped') ? 'Answer revealed — click or press Space to flip back' : el.querySelector('.fc-front').textContent.trim() + ' — click or press Space to reveal answer'); }
 function setFcFilter(cat) { fcFilter = cat; renderFlashcards(); }
 renderFlashcards();
 
@@ -726,7 +804,7 @@ const saData = [
       {term:"removing F- by protonation shifts equilibrium right dissolving more CaF2", synonyms:["consuming F- dissolves more salt","equilibrium shifts right when anion removed"], weight:2},
       {term:"Ksp itself does not change in either case", synonyms:["Ksp unchanged","Ksp constant at given temperature"], weight:1}
     ],
-    model: "CaF₂ dissolves according to CaF₂(s) <span aria-hidden="true">⇌</span> Ca²⁺(aq) + 2F⁻(aq). When NaF is added, it provides additional F⁻ ions (common ion effect). The increased [F⁻] makes Q > Ksp, so the equilibrium shifts left and CaF₂ precipitates, effectively decreasing its solubility. When HCl is added, the H⁺ ions react with F⁻ (a basic anion, conjugate base of the weak acid HF): H⁺ + F⁻ <span aria-hidden="true">→</span> HF. This removes F⁻ from solution, making Q < Ksp, so the equilibrium shifts right and more CaF₂ dissolves, increasing solubility. In both cases, Ksp itself remains unchanged at constant temperature."
+    model: "CaF₂ dissolves according to CaF₂(s) <span aria-hidden='true'>⇌</span> Ca²⁺(aq) + 2F⁻(aq). When NaF is added, it provides additional F⁻ ions (common ion effect). The increased [F⁻] makes Q > Ksp, so the equilibrium shifts left and CaF₂ precipitates, effectively decreasing its solubility. When HCl is added, the H⁺ ions react with F⁻ (a basic anion, conjugate base of the weak acid HF): H⁺ + F⁻ <span aria-hidden='true'>→</span> HF. This removes F⁻ from solution, making Q < Ksp, so the equilibrium shifts right and more CaF₂ dissolves, increasing solubility. In both cases, Ksp itself remains unchanged at constant temperature."
   },
   {
     q: "Compare alpha, beta, and gamma radiation in terms of composition, charge, mass, and penetrating power. Which type of decay would you expect from a nucleus with too many neutrons?",
@@ -748,7 +826,7 @@ function renderSA() {
       <div class="q-num" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);margin-bottom:.5rem;">Question ${i+1} of ${saData.length}</div>
       <p style="font-weight:500;">${q.q}</p>
       <textarea id="sa-input-${i}" placeholder="Type your answer here..."></textarea>
-      <button class="sa-grade-btn" onclick="gradeSA(${i})">Grade Answer</button>
+      <button type="button" class="sa-grade-btn" onclick="gradeSA(${i})">Grade Answer</button>
       <div class="sa-result" id="sa-result-${i}"></div>
     </div>
   `).join('');
@@ -781,20 +859,22 @@ function gradeSA(i) {
   result.innerHTML = `
     <div style="font-weight:600;font-size:1.05rem;color:${color};">${pct}%</div>
     <div class="sa-bar"><div class="sa-bar-fill" style="width:${pct}%;background:${color};"></div></div>
-    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '<span aria-hidden="true">✓</span>' : '<span aria-hidden="true">○</span>'} ${t.label}</span>`).join('')}</div>
+    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '<span aria-hidden=\"true\">✓</span>' : '<span aria-hidden=\"true\">○</span>'} ${t.label}</span>`).join('')}</div>
     <details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${q.model}</div></details>
   `;
 }
 renderSA();
+
+function toggleDisclaimer() {
+  const body  = document.getElementById('disc-body');
+  const arrow = document.getElementById('disc-arrow');
+  const btn   = document.querySelector('.disclaimer-toggle');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+  btn.setAttribute('aria-expanded', body.classList.contains('open') ? 'true' : 'false');
+}
+
 </script>
 
-  <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
-  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
-  <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
-  <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
-  <p style="margin: 0 0 10px 0;">No guarantees are made regarding the completeness, accuracy, or reliability of any information presented on these sites. Use at your own discretion. If you spot an error, we appreciate you letting us know so it can be corrected.</p>
-  <p style="margin: 0 0 10px 0;">These materials are not affiliated with, endorsed by, or officially connected to any university, college, testing organization, or textbook publisher. All content represents the independent work and ideas of the author.</p>
-  <p style="margin: 0;">This resource is provided "as is" without warranty of any kind, express or implied. The author assumes no liability for any errors or for any actions taken based on the information provided here.</p>
-</div>
 </body>
 </html>
